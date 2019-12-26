@@ -1,0 +1,16 @@
+<div theme class="myTheme">
+    <!-- <div  > -->
+    
+        <router-outlet></router-outlet>
+        <div class="ver">{{this.version}}</div>
+        <form [formGroup]="langForm" class="myForm">
+            <select class="form-control" formControlName="language" id="status">
+                        <option  *ngFor='let lang of this.languages | keyvalue;' [value]="lang.key">
+                            {{ lang.value.language_short | myTranslator : this.glob.language}}
+                        </option>
+                    </select>
+        </form>
+        <!-- <section [ngClass]="{'onOffLineIndicator':true,'onLine':this.window.navigator.onLine, 'offLine':!this.window.navigator.onLine}">
+        </section> -->
+    <!-- </div> -->
+</div>

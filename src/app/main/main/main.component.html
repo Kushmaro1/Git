@@ -1,0 +1,40 @@
+<div theme class="mybox myFlexRow">
+  
+    <app-header [user]="this.user" [logout]="'Log Out' | myTranslator : this.glob.language"  [header]="this.page | myTranslator : this.glob.language" [parent]="this.instance"></app-header>
+  
+    <article class="myFlexCol">
+      <section class="myMessageBox">
+        <ng-container *ngIf="this.messages.length">
+            <!-- <div *ngFor="let mess of this messages">
+
+            </div> -->
+            <div [ngClass]="{'myMessage':true, 'myError':this.messages[0].style.error}">
+               <!-- <div class="myMessageHeader">
+                 {{this.messages[0].header}}
+               </div>  -->
+               <div class="myMessageBody">
+                 {{this.messages[0].body | myTranslator : this.glob.language}}
+                </div>
+                <i *ngIf="!this.messages[0].style.error" class="fas fa-check-circle"></i> <i *ngIf="this.messages[0].style.error" class="fas fa-exclamation-circle"></i> 
+            </div>
+        </ng-container>
+      </section> 
+      <nav class="myMenu">
+        <ng-container *ngFor="let nav of this.navigationItems">
+          <section [ngClass]="{'myNavItem':true,'mySelectedNav':this.selectedNav === nav.name}"  (click)="this.navClick(nav.name)">
+            {{nav.name | myTranslator : this.glob.language}}
+          </section>
+          <div *ngIf="this.selectedNav === nav.name">
+            <div *ngFor="let subnav of nav['subnavs']" (click)="this.subNavClick(nav.name, subnav.value)" [ngClass]="{'myNavItem':true,'mySubNavItem':true,'mySelectedSubNav':this.selectedSubnav === subnav.name}">
+              {{subnav.name | myTranslator : this.glob.language}}
+            </div>
+          </div>
+        </ng-container>
+      </nav>
+    </article>
+    <h1 *ngIf="oneMinLeft" class="tmeLeft" >{{'User logout in' | myTranslator : this.glob.language}}:  {{ (minutesDisplay) }}:{{ (secondsDisplay) && (secondsDisplay <=59) ? secondsDisplay : '00' }}
+    </h1>
+    <div class="myContainer">
+        <router-outlet  (activate)="onActivate($event)"></router-outlet>
+      </div>
+  </div>

@@ -1,0 +1,308 @@
+<div class="pageHeader myFlexRow">
+  <div class="width50"></div>
+  <span>
+    {{ this.header | myTranslator : this.glob.language }}
+  </span>
+  <div class="width50 myFlexRow myFlexEnd">
+    <button *ngIf="this.type != 'new'" class="mySaveButton"
+      (click)="comeBack2()">{{'Back' | myTranslator : this.glob.language}}</button>
+    <button *ngIf="this.type != 'view'" class="mySaveButton"
+      (click)="submitForm()">{{'Save' | myTranslator : this.glob.language}}</button>
+    <button class="myEditButton" (click)="comeBack()">{{this.returnDelete | myTranslator : this.glob.language}}</button>
+    <button *ngIf="this.type == 'view'" class="myEditButton"
+      (click)="goToEdit()">{{'Edit' | myTranslator : this.glob.language}}</button>
+  </div>
+</div>
+<form *ngIf='this.showData' [formGroup]="productAddForm" class="myAddForm">
+  <div class=" myFlexRow">
+    <article class="myShadowBox width99 myHeight">
+
+      <section class="myFlexRow myFlexSpaceBetween">
+         <!-- <select selected="" [value]="this.productAddForm.value['parent_type']" class="form-control"
+         
+          formControlName="parent_type" id="parent_type">
+
+          <option *ngFor='let parentType of  parentTypes ' [value]="parentType">
+            {{ parentType | myTranslator : this.glob.language }}
+          </option>
+        </select>  -->
+        <div class="form-group width40 myFlexCol">
+          <span class='singleLine'>
+            {{'SKU' | myTranslator : this.glob.language}}<span class="myRequired">*</span>
+          </span>
+          <input type="text"
+            [ngClass]="{'borderError': productAddForm.get('parent_id').touched && productAddForm.get('parent_id').hasError('required')}"
+            autocomplete="off" class="form-control" formControlName="parent_id" id="nameAdd">
+        </div>
+        <div class="form-group width40 myFlexCol">
+          <div class="form-group" style="margin-bottom: 2vh;">
+            <label for="category">
+              <span>
+              </span>
+              <span class='singleLine'>
+
+                {{ 'Categories' | myTranslator : this.glob.language }}<span class="myRequired">*</span>
+              </span>
+            </label>
+            <select [value]="this.productAddForm.value['category']" class="form-control"
+              [ngClass]="{'borderError': productAddForm.get('category').touched && productAddForm.get('category').hasError('required')}"
+              formControlName="category" id="categoryAdd">
+              <!-- <option   [value]="">
+                          {{ 'Categories' | myTranslator : this.glob.language }}
+                      </option> -->
+              <option *ngFor='let category of this.categories;let m=index;' [value]="category">
+                {{ category | myTranslator : this.glob.language }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </section>
+      <section class="myFlexRow myFlexSpaceBetween">
+        <div class="form-group width40 myFlexCol">
+          <span class='singleLine'>
+            {{'Product Name' | myTranslator : this.glob.language}}<span class="myRequired">*</span>
+          </span>
+          <input type="text"
+            [ngClass]="{'borderError': productAddForm.get('name').touched && productAddForm.get('name').hasError('required')}"
+            autocomplete="off" class="form-control" formControlName="name" id="nameAdd">
+        </div>
+        <div class="form-group width40 myFlexCol">
+          <!-- <label> {{ 'No Discount Products' | myTranslator : this.glob.language }}
+            <input class="form-control" type="checkbox" formControlName="noDiscount" id="noDiscount">
+          </label>  -->
+          <span class='singleLine'>
+            {{'Price' | myTranslator : this.glob.language}}<span class="myRequired">*</span>
+          </span>
+          <input type="number"
+            [ngClass]="{'borderError': productAddForm.get('price').touched && productAddForm.get('price').hasError('required')}"
+            autocomplete="off" class="form-control" formControlName="price" id="priceAdd">
+        </div>
+
+
+      </section>
+      <!-- <article class="myShadowBox width30 myHeight"> -->
+      <!-- <section>
+          <textarea class="myDescription width100" 
+          [placeholder]="'Product Description' | myTranslator : this.glob.language"
+          [ngClass]="{'borderError': productAddForm.get('description').touched && productAddForm.get('description').hasError('required')}"
+          formControlName="description"></textarea>
+        </section> -->
+      <!-- </article> -->
+    </article>
+  </div>
+
+  <div class=" myFlexRow">
+    <article class="myShadowBox width99 myHeight">
+      <section class="myFlexRow myFlexSpaceBetween">
+        <div class="form-group width40 myFlexCol">
+          <span class='singleLine'>
+            {{'Bar Code' | myTranslator : this.glob.language}}
+          </span>
+          <input type="text" (keydown.enter)="this.quickAdd()"
+            [ngClass]="{'borderError': productAddForm.get('id').touched && (productAddForm.get('id').hasError('maxlength') || productAddForm.get('id').hasError('minlength') || productAddForm.get('id').hasError('incorrect') )}"
+            autocomplete="off" class="form-control" formControlName="id" id="barCodeId">
+        </div>
+        <div class="form-group width40 myFlexCol">
+          <span class='singleLine'>
+            {{'Purchasing Price' | myTranslator : this.glob.language}}
+          </span>
+          <input type="number"
+            [ngClass]="{'borderError': productAddForm.get('purchasing_price').touched && productAddForm.get('purchasing_price').hasError('required')}"
+            autocomplete="off" class="form-control" formControlName="purchasing_price" id="ppriceAdd">
+        </div>
+      </section>
+      <section class="myFlexRow myFlexSpaceBetween">
+        <div class="form-group width40 myFlexCol">
+          <span class='singleLine'>
+            {{'Serial Number' | myTranslator : this.glob.language}}
+          </span>
+          <input type="text"
+            [ngClass]="{'borderError': productAddForm.get('serial_number').touched && productAddForm.get('serial_number').hasError('required')}"
+            autocomplete="off" class="form-control" formControlName="serial_number" id="snAdd">
+        </div>
+        <div [ngClass]="{'form-group-date-from':true,'myFlexCol':true,'myFlexAlignStart':true, 'width40':true}">
+          <label for="purchase_date">{{ 'Purchasing Date' | myTranslator : this.glob.language }}</label>
+          <input type="date"
+            [ngClass]="{'borderError': productAddForm.get('purchase_date').touched && productAddForm.get('purchase_date').hasError('required')}"
+            formControlName="purchase_date" id="purchase_date">
+          <i class="fas fa-calendar-plus fa-lg"></i>
+        </div>
+      </section>
+      <section class="myFlexRow myFlexSpaceBetween">
+        <div class="form-group width40 myFlexCol">
+          <span class='singleLine'>
+            {{'Supplier' | myTranslator : this.glob.language}}
+          </span>
+          <input type="text"
+          
+            autocomplete="off" class="form-control" formControlName="supplier" id="supplier">
+       
+            <div *ngIf="selectedParentTyp === 'generic'"> 
+            
+            <span class='singleLine'> 
+            {{'Amount' | myTranslator : this.glob.language}}
+          </span>
+            <input type="number" autocomplete="off" class="form-control" formControlName="amount" id="amount">
+          </div>
+        </div>
+        <div [ngClass]="{'form-group-date-from':true,'myFlexCol':true,'myFlexAlignStart':true, 'width40':true}">
+          <label
+            for="insurance_expiration_date">{{ 'Insurance Expiration Date' | myTranslator : this.glob.language }}</label>
+          <input type="date" class="form-control" formControlName="insurance_expiration_date"
+            id="insurance_expiration_date">
+          <i class="fas fa-calendar-plus fa-lg"></i>
+        </div>
+      </section>
+      <!-- <article class="myShadowBox width30 myHeight"> -->
+      <!-- <section>
+          <textarea class="myDescription width100" 
+          [placeholder]="'Product Description' | myTranslator : this.glob.language"
+          [ngClass]="{'borderError': productAddForm.get('description').touched && productAddForm.get('description').hasError('required')}"
+          formControlName="description"></textarea>
+        </section> -->
+      <!-- </article> -->
+    </article>
+  </div>
+
+  <div *ngIf="this.type == 'new' && this.showData" class=" myFlexRow myFlexAlignStretch" id="myRemarkChild">
+    <article class="myShadowBox width20 myHeight">
+      <div class="myHeader">
+        {{'Comments' | myTranslator : this.glob.language}}
+      </div>
+      <app-remarks [remarks]="this.remarks" (newRemark)="this.addRemark($event)"></app-remarks>
+    </article>
+    <article class="myShadowBox width40 myHeight">
+      <div class="myHeader">
+        {{'Documents' | myTranslator : this.glob.language}}
+      </div>
+      <!-- <button class="mySaveButton" (click)="addNewChild()">{{'Add New' | myTranslator : this.glob.language}}</button> -->
+      <div class="updateImage">
+        <!-- <p class="myLabel">Channel favicon</p> -->
+        <form [formGroup]="docForm" class="boxBorder">
+          <!-- <button class="myHollowButton">Upload favicon</button> accept="image/png, image/jpeg" -->
+          <input class="myFile" type="file" multiple formControlName='data' (change)="getfile($event,1)">
+          <!-- <span>Upload PNG or JPG</span> -->
+        </form>
+      </div>
+      <ng-container *ngFor="let doc of documents;let k=index;">
+        <button [ngClass]="{'myButton': false,'myButtonIcon':true}" (click)="newDocumentsDelete(k)"><i
+            class="fas fa-trash-alt"></i></button>
+        <iframe class='myNewIframe' [src]="doc | safeResouceUrl"></iframe>
+      </ng-container>
+    </article>
+    <article class="myShadowBox width40 myHeight">
+      <div class="myHeader">
+        {{'Pictures' | myTranslator : this.glob.language}}
+      </div>
+      <div class="updateImage">
+        <!-- <p class="myLabel">Channel favicon</p> -->
+        <form [formGroup]="imageForm" class="boxBorder">
+          <!-- <button class="myHollowButton">Upload favicon</button> accept="image/png, image/jpeg" -->
+          <input class="myFile" type="file" formControlName='data' multiple (change)="getfile($event,0)">
+          <!-- <span>Upload PNG or JPG</span> -->
+        </form>
+      </div>
+      <!-- <button class="mySaveButton" (click)="addNewChild()">{{'Add New' | myTranslator : this.glob.language}}</button> -->
+      <ng-container *ngFor="let img of images;let i=index;">
+        <!-- <i (click)="newImagesDelete(i)" class="fas fa-trash-alt"></i> -->
+        <button [ngClass]="{'myButton': false,'myButtonIcon':true}" (click)="newImagesDelete(i)"><i
+            class="fas fa-trash-alt"></i></button>
+        <iframe class='myNewIframe' [src]="img | safeResouceUrl"></iframe>
+      </ng-container>
+    </article>
+  </div>
+
+
+  <article *ngIf="this.type == 'view'" class="myShadowBox width99">
+    <div class="myHeader">
+      {{'History Table' | myTranslator : this.glob.language}}
+    </div>
+    <section class="tableContainer2" #tableBonds>
+      <app-table [parent]="instance" [tableStructure]="tableStructure" [tableData]="tableData" [myStyle]="myStyle">
+      </app-table>
+    </section>
+  </article>
+
+  <div *ngIf="this.type != 'new'" class=" myFlexRow myFlexAlignStretch" id="myRemarkChild">
+
+    <article class="myShadowBox width20 myHeight">
+      <div class="myHeader">
+        {{'Comments' | myTranslator : this.glob.language}}
+      </div>
+      <app-remarks [remarks]="this.remarks" (newRemark)="this.addRemark($event)"></app-remarks>
+    </article>
+    <article class="myShadowBox width40 myHeight">
+      <div class="myHeader">
+        {{'Documents' | myTranslator : this.glob.language}}
+      </div>
+      <!-- <button class="mySaveButton" (click)="addNewChild()">{{'Add New' | myTranslator : this.glob.language}}</button> -->
+      <div class="updateImage">
+        <!-- <p class="myLabel">Channel favicon</p> -->
+        <form [formGroup]="docForm" class="boxBorder">
+          <!-- <button class="myHollowButton">Upload favicon</button> accept="image/png, image/jpeg" -->
+          <input class="myFile" type="file" formControlName='data' (change)="getfile($event,1)">
+          <!-- <span>Upload PNG or JPG</span> -->
+        </form>
+      </div>
+      <section class="tableContainer2" #tableBonds>
+        <app-table [parent]="instance" [tableStructure]="tableStructure3" [tableData]="documents" [myStyle]="myStyle">
+        </app-table>
+      </section>
+    </article>
+    <article class="myShadowBox width40 myHeight">
+      <div class="myHeader">
+        {{'Pictures' | myTranslator : this.glob.language}}
+      </div>
+      <div class="updateImage">
+        <!-- <p class="myLabel">Channel favicon</p> -->
+        <form [formGroup]="imageForm" class="boxBorder">
+          <!-- <button class="myHollowButton">Upload favicon</button> accept="image/png, image/jpeg" -->
+          <input class="myFile" type="file" formControlName='data' (change)="getfile($event,0)">
+          <!-- <span>Upload PNG or JPG</span> -->
+        </form>
+      </div>
+      <!-- <button class="mySaveButton" (click)="addNewChild()">{{'Add New' | myTranslator : this.glob.language}}</button> -->
+      <section class="tableContainer2" #tableBonds>
+        <app-table [parent]="instance" [tableStructure]="tableStructure2" [tableData]="images" [myStyle]="myStyle">
+        </app-table>
+      </section>
+    </article>
+  </div>
+
+</form>
+<article *ngIf="this.askForNew" class="myPopUp">
+  <section class="myQuerry myShadowBox">
+    <div class="myHeader">
+      {{'Child Added Successfuly,' | myTranslator : this.glob.language}}
+      {{'Add New Child?' | myTranslator : this.glob.language}}
+    </div>
+
+    <div class="myFlexRow myFlexSpaceAround width100">
+      <button class="mySaveButton" (click)="addNewChild()">{{'Add New' | myTranslator : this.glob.language}}</button>
+      <button class="myEditButton"
+        (click)="comeBack()">{{this.returnDelete | myTranslator : this.glob.language}}</button>
+    </div>
+  </section>
+</article>
+<article *ngIf="this.showDoc" class="myPopUp">
+  <iframe class='myIframe' [src]="this.docView | safeResouceUrl"></iframe>
+  <div class="myFlexRow myFlexSpaceAround width100">
+    <button class="mySaveButton" (click)="saveFile()">{{'Save' | myTranslator : this.glob.language}}</button>
+    <button class="myEditButton" (click)="this.closeImage()">{{'Back' | myTranslator : this.glob.language}}</button>
+  </div>
+</article>
+<article *ngIf="this.askForDelete" class="myPopUp">
+  <section class="myQuerry myShadowBox">
+    <div class="myHeader">
+      {{'Delete This Product' | myTranslator : this.glob.language}}
+      <!-- {{"And It's Children?" | myTranslator : this.glob.language}} -->
+    </div>
+
+    <div class="myFlexRow myFlexSpaceAround width100">
+      <button class="myEditButton"
+        (click)="this.askForDelete = !this.askForDelete">{{'Cancel' | myTranslator : this.glob.language}}</button>
+      <button class="myEditButton"
+        (click)="deleteChildProduct()">{{this.returnDelete | myTranslator : this.glob.language}}</button>
+    </div>
+  </section>
+</article>

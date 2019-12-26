@@ -1,0 +1,269 @@
+<div class="pageHeader myFlexRow">
+    <div class="width50"></div>
+    <span>
+      {{ this.header | myTranslator : this.glob.language }}
+    </span>
+    <div  class="width50 myFlexRow myFlexEnd"> 
+      <button *ngIf="this.type != 'view'" class="mySaveButton" (click)="submitForm()">{{'Save' | myTranslator : this.glob.language}}</button>
+      <button *ngIf="isAdminUse" class="myEditButton" (click)="comeBack()">{{this.returnDelete | myTranslator : this.glob.language}}</button>
+      <button *ngIf="this.type != 'new'" class="myEditButton" (click)="comeBack2()">{{'Back' | myTranslator : this.glob.language}}</button>
+      <button *ngIf="this.type != 'new'" class="mySaveButton" (click)="addChildProduct()">{{'Add Child Product' | myTranslator : this.glob.language}}</button>
+    </div>
+  </div>
+  <form  [formGroup]="productAddForm" class="myAddForm">
+    <div  class=" myFlexRow">
+
+      <article class="myShadowBox width49 myHeight">
+
+          <section class="myFlexRow myFlexSpaceBetween">
+            <div class="form-group width40 myFlexCol" >
+                <select [(ngModel)]="this.selectedParentTyp" [value]="this.productAddForm.value['parent_type']" class="form-control" [ngClass]="{'borderError': productAddForm.get('parent_type').touched && productAddForm.get('parent_type').hasError('required')}" formControlName="parent_type" id="parent_type">
+                  
+                    <option  *ngFor='let parentType of  parentTypes ' [value]="parentType">
+                        {{ parentType | myTranslator : this.glob.language }}
+                    </option>
+                </select>
+              <span class='singleLine'>
+                {{'SKU' | myTranslator : this.glob.language}}<span class="myRequired">*</span>
+              </span>
+            
+                <input type="text"   [ngClass]="{'borderError': productAddForm.get('id').touched && productAddForm.get('id').hasError('required')}"  autocomplete="off"  class="form-control" formControlName="id" id="nameAdd">
+             </div>
+             <div class="form-group width40 myFlexCol">
+                <div class="form-group"  style="margin-bottom: 2vh;" >
+                    <label for="category">
+                      <span>       
+                      </span>
+                      <span class='singleLine'>
+                         
+                         {{ 'Categories' | myTranslator : this.glob.language }}<span class="myRequired">*</span>
+                      </span>
+                    </label>
+                     <select [value]="this.productAddForm.value['category']" class="form-control" [ngClass]="{'borderError': productAddForm.get('category').touched && productAddForm.get('category').hasError('required')}" formControlName="category" id="categoryAdd">
+                        <!-- <option   [value]="">
+                            {{ 'Categories' | myTranslator : this.glob.language }}
+                        </option> -->
+                        <option  *ngFor='let category of this.categories;let m=index;' [value]="category">
+                            {{ category | myTranslator : this.glob.language }}
+                        </option>
+                    </select>
+              </div>
+              </div>
+          </section>
+          <section class="myFlexRow myFlexSpaceBetween">
+            <div class="form-group width40 myFlexCol" >
+              <span class='singleLine'>
+                {{'Product Name' | myTranslator : this.glob.language}}<span class="myRequired">*</span>
+              </span>
+                <input type="text"   [ngClass]="{'borderError': productAddForm.get('name').touched && productAddForm.get('name').hasError('required')}"  autocomplete="off"  class="form-control" formControlName="name" id="nameAdd">
+            </div>
+            <div class="form-group width40 myFlexCol" >
+                <label>  {{ 'No Discount Products' | myTranslator : this.glob.language }}
+                    <input  class="form-control"  type="checkbox"  formControlName="noDiscount" id="noDiscount">
+                  </label>
+              <span class='singleLine'>
+                {{'Price' | myTranslator : this.glob.language}}<span class="myRequired">*</span>
+              </span>
+                <input type="number"   [ngClass]="{'borderError': productAddForm.get('price').touched && productAddForm.get('price').hasError('required')}"  autocomplete="off"  class="form-control" formControlName="price" id="priceAdd">
+             </div>
+            
+            
+          </section>
+          <!-- <article class="myShadowBox width30 myHeight"> -->
+          <section>
+            
+              <!-- <div class="myHeader">
+                  {{'Product Description' | myTranslator : this.glob.language}}
+                </div> -->
+            <textarea class="myDescription width100" 
+            [placeholder]="'Product Description' | myTranslator : this.glob.language"
+            [ngClass]="{'borderError': productAddForm.get('description').touched && productAddForm.get('description').hasError('required')}"
+            formControlName="description"></textarea>
+          </section>
+          <!-- </article> -->
+          </article>
+         
+    </div>
+    <div  class=" myFlexRow">
+
+     
+          <article class="myShadowBox width50 myHeight">
+            <div class="myHeader">
+                  {{'Related Parent Products' | myTranslator : this.glob.language}}
+                </div>
+                <section class=" myContactEntries">
+                    <div class="myAddContactHeader">
+                      <div class="myTableHeader myFlexRow">
+                        <span class="width30">
+                          {{ 'Item' | myTranslator : this.glob.language }}
+                        </span>
+                        <span class="width30">
+                          {{ 'Amount' | myTranslator : this.glob.language }}
+                        </span>
+                        <span class="width30" style="
+                        text-align: center;">
+                          {{ 'Actions' | myTranslator : this.glob.language }}              
+                        </span>
+                      </div>
+                    </div>
+                    <div [ngClass]="{'myFlexCol':true, 'myRow':true,'myOdd':((i+1)%2)}" *ngFor="let item of this.additional_parent_items;let i=index;">
+                        <div class="width100 myFlexRow">
+                            <span class="width30">
+                              <div class="form-group small width100 myFlexCol"  [ngClass]="{'disabled':this.edit!=i}">
+                                    <input type="text"  autocomplete="off" [attr.id]="'positionfield' + i"  (keydown.enter)="this.nextField($event,'namefield',i)" [disabled]="this.edit!=i" class="form-control" (input)="this.setItems($event,i,'sub')" [value]="item.sub">
+                                   
+                              </div>
+                              <!-- {{ 'Position' | myTranslator : this.glob.language }} -->
+                            </span>
+                            <span class="width30">
+                                <div class="form-group small width100 myFlexCol"  [ngClass]="{'disabled':this.edit!=i}">
+                                    <input type="number"  autocomplete="off" [attr.id]="'namefield' + i" (focus)="item.amount = ''" [disabled]="this.edit!=i" [ngClass]="{'borderError': item.error,'form-control':true}"  (input)="this.setItems($event,i,'amount')" [value]="item.amount">
+                              </div>
+                              <!-- {{ 'Full Name' | myTranslator : this.glob.language }} -->
+                            </span>
+                            <span class="width30 myFlexRow myFlexCenter myFlexSpaceAround myRowMenu">      
+                                    <button [disabled]="this.type=='view'" *ngIf="this.type!='view'" [ngClass]="{'myButton': false,'myButtonIcon':true}"   (click)="this.editEntry(i)"><i class="fas fa-edit"></i></button>
+                                    <!-- <button [ngClass]="{'myButton': false,'myButtonIcon':true}"   (click)="this.editEntry(i)">{{ 'Edit' | myTranslator : this.glob.language }}</button> -->
+                                    <!-- <button [ngClass]="{'myButton': true,'myButtonIcon':false}"   (click)="contactAction('delete',$event,i)">{{ 'Delete' | myTranslator : this.glob.language }}</button>             -->
+                                    <button [disabled]="this.type=='view'" *ngIf="this.type!='view'" [ngClass]="{'myButton': false,'myButtonIcon':true}"   (click)="itemAction('delete',$event,i)"><i class="fas fa-trash-alt"></i></button>            
+                            </span>
+                          </div>
+                    </div>
+                  </section>
+                  
+                  <button [disabled]="this.type=='view'" [ngClass]="{'myAddContactButton':true ,'disabledButton':this.type=='view'}"  (click)="itemAction('add','',-1)">{{'Add Related Item' | myTranslator : this.glob.language}}</button>
+                  <section class=" width100" *ngIf="this.edit !=-1 && this.additional_parent_items[this.edit].sub.length>2">
+                    <ng-container *ngIf="this.autoComplete.length">
+
+                      <div  class="myAutoComplete">
+                                         <div class="myAutoCompleteEntry" (click)="this.selectEntryForAutoComplete(com)" *ngFor = "let com of this.autoComplete">
+                                          <span *ngIf="this.additional_parent_items[this.edit]['sub'] != com.name"> {{com.name}}</span>
+                                         </div>
+                      </div>
+                    </ng-container>
+                  </section>
+          </article>
+          <article class="myShadowBox width50 myHeight">
+            <div class="myHeader">
+                  {{'Related Accessories' | myTranslator : this.glob.language}}
+                </div>
+                <section class=" myContactEntries">
+                    <div class="myAddContactHeader">
+                      <div class="myTableHeader myFlexRow">
+                        <span class="width30">
+                          {{ 'Name' | myTranslator : this.glob.language }}
+                        </span>
+                        <span class="width30">
+                          {{ 'Amount' | myTranslator : this.glob.language }}
+                        </span>
+                        <span class="width30" style="
+                        text-align: center;">
+                          {{ 'Actions' | myTranslator : this.glob.language }}              
+                        </span>
+                      </div>
+                    </div>
+                    <div [ngClass]="{'myFlexCol':true, 'myRow':true,'myOdd':((i+1)%2)}" *ngFor="let accessorie of this.accessories;let i=index;">
+                        <div class="width100 myFlexRow">
+                            <span class="width30">
+                              <div class="form-group small width100 myFlexCol"  [ngClass]="{'disabled':this.edit2!=i}">
+                                    <input type="text"  autocomplete="off" [attr.id]="'accessoriesfield' + i"  (keydown.enter)="this.nextField($event,'accessoriesnamefield',i)" [disabled]="this.edit2!=i" class="form-control" (input)="this.setItems2($event,i,'name')" [value]="accessorie.name">
+                                   
+                              </div>
+                              <!-- {{ 'Position' | myTranslator : this.glob.language }} -->
+                            </span>
+                            <span class="width30">
+                                <div class="form-group small width100 myFlexCol"  [ngClass]="{'disabled':this.edit2!=i}">
+                                    <input type="number"  autocomplete="off" (focus)="accessorie.amount = ''" [attr.id]="'accessoriesnamefield' + i" [disabled]="this.edit2!=i" [ngClass]="{'borderError': accessorie.error,'form-control':true}"  (input)="this.setItems2($event,i,'amount')" [value]="accessorie.amount">
+                              </div>
+                              <!-- {{ 'Full Name' | myTranslator : this.glob.language }} -->
+                            </span>
+                            <span class="width30 myFlexRow myFlexCenter myFlexSpaceAround myRowMenu">      
+                                    <button [disabled]="this.type=='view'" *ngIf="this.type!='view'" [ngClass]="{'myButton': false,'myButtonIcon':true}"   (click)="this.editEntry2(i)"><i class="fas fa-edit"></i></button>
+                                    <!-- <button [ngClass]="{'myButton': false,'myButtonIcon':true}"   (click)="this.editEntry(i)">{{ 'Edit' | myTranslator : this.glob.language }}</button> -->
+                                    <!-- <button [ngClass]="{'myButton': true,'myButtonIcon':false}"   (click)="contactAction('delete',$event,i)">{{ 'Delete' | myTranslator : this.glob.language }}</button>             -->
+                                    <button [disabled]="this.type=='view'" *ngIf="this.type!='view'" [ngClass]="{'myButton': false,'myButtonIcon':true}"   (click)="itemAction2('delete',$event,i)"><i class="fas fa-trash-alt"></i></button>            
+                            </span>
+                          </div>
+                    </div>
+                  </section>
+                  
+                  <button [disabled]="this.type=='view'" [ngClass]="{'myAddContactButton':true ,'disabledButton':this.type=='view'}"  (click)="itemAction2('add','',-1)">{{'Add Related Accessorie' | myTranslator : this.glob.language}}</button>
+                  
+          </article>
+    </div>
+          <ng-container *ngIf="this.type == 'view'">
+            
+            <form [formGroup]="productsTableForm" class="width99 myFlexRow myFlexSpaceAround myFlexAlignCenter myShadowBox">
+                <div class="myDates" >
+                </div>
+                    <div class="myDates">{{'Due Date'| myTranslator : this.glob.language}}{{': '}}</div>
+                    <article class="myDate myFlexRow myFlexAlignCenter">
+                      <div>
+                        <div  [ngClass]="{'form-group-date-from':true,'myFlexCol':true,'myFlexAlignStart':true}" >
+                              <label for="date_from">{{ 'From' | myTranslator : this.glob.language }}</label>
+                              <input  type="date" class="form-control" formControlName="date_from" id="date_from">
+                              <i class="fas fa-calendar-plus fa-lg"></i>
+                      </div>
+                      <div  [ngClass]="{'form-group-date-to':true,'myFlexCol':true,'myFlexAlignStart':true}" >
+                              <label for="date_to">{{ 'To' | myTranslator : this.glob.language }}</label>
+                              <input  type="date" class="form-control" formControlName="date_to" id="date_to">
+                              <i class="fas fa-calendar-plus fa-lg"></i>
+                      </div>
+                      </div>
+
+                      <span class="fa-stack fa-lg myplus" *ngIf="this.productsTableForm.value.date_from && this.productsTableForm.value.date_to" (click)="this.addDate()">
+                          <i style="color:#51CCA1" class="fas fa-circle fa-stack-2x"></i>
+                        <i style="color:white;" class="fas fa-plus fa-stack-1x"></i>
+                      </span>
+                    </article>
+                    <article class="myDate">
+                      <div class=" myScroll myFlexRow myFlexAlignCenter myFlexWrap">
+                        <div *ngFor="let entry of this.dates; index as i" class="myDateEntry">
+                            <button class="myEditButton" (click)="this.remove_date(i)" >remove</button> {{entry.date_from}}{{' - '}}{{entry.date_to}} 
+                        </div>
+                      </div>
+                    </article>
+                    {{'Total'| myTranslator : this.glob.language}}  :  {{this.chilrednsTableData.length}} 
+                    {{'Avilable'| myTranslator : this.glob.language}} : {{this.avilable}}
+                    <button > {{'in use'| myTranslator : this.glob.language}} : {{ this.chilrednsTableData.length - this.avilable }} </button>
+            </form>
+            <article class="myShadowBox width99">
+                <section class="tableContainer2"  #tableBonds>
+                    <app-table  [parent]="this.instance" [tableStructure]="this.tableStructure" [tableData]="this.chilrednsTableData" [myStyle]="this.myStyle" ></app-table>
+                </section>
+            </article>
+
+            <!-- <article class="myShadowBox width50">
+  
+            </article>
+            <article class="myShadowBox width50">
+  
+            </article> -->
+          </ng-container>
+          <article *ngIf="this.askForNew" class="myPopUp">
+              <section class="myQuerry myShadowBox">
+                  <div class="myHeader">
+                      {{'Delete This Product' | myTranslator : this.glob.language}}
+                      {{"And It's Children?" | myTranslator : this.glob.language}}
+                  </div>
+                 
+              <div class="myFlexRow myFlexSpaceAround width100">
+                <button class="myEditButton" (click)="this.askForNew = !this.askForNew">{{'Cancel' | myTranslator : this.glob.language}}</button>
+                <button class="myEditButton" (click)="deleteProduct()">{{this.returnDelete | myTranslator : this.glob.language}}</button>
+              </div>
+              </section>
+            </article>
+            <article *ngIf="this.askForDelete" class="myPopUp">
+              <section class="myQuerry myShadowBox">
+                  <div class="myHeader">
+                      {{'Delete This Product' | myTranslator : this.glob.language}}{{'?'}}
+                      <!-- {{"And It's Children?" | myTranslator : this.glob.language}} -->
+                  </div>
+                 
+              <div class="myFlexRow myFlexSpaceAround width100">
+                <button class="myEditButton" (click)="this.askForDelete = !this.askForDelete">{{'Cancel' | myTranslator : this.glob.language}}</button>
+                <button class="myEditButton" (click)="deleteChildProduct('',{id:this.idToDelete})">{{'Delete' | myTranslator : this.glob.language}}</button>
+              </div>
+              </section>
+            </article>
+    </form>

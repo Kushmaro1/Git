@@ -1,0 +1,39 @@
+<header class="mainHeader myFlexRow myFlexAlignCenter">
+  <!-- <nav [ngClass]="{'myMenu' : true,'myMenuChange' : hamburgerState === 1 }" >
+      <section *ngFor="let nav of navigationItems">
+          <button *ngIf="nav.visible" (click)="clickNav(nav,nav.parameters)">{{nav.name}}</button>
+      </section>
+  </nav> -->
+  <div class="myFiller  ">
+    <img class="myLogo" src="../../../assets/images/logo.jpg">
+  </div>
+  <div class="myPage">
+    {{this.header}}
+  </div>
+  <div  class="myUser">
+    <div *ngIf="this.logout" class="myFlexRow myFlexAlignCenter myFlexSpaceAround">
+      <div class="myPic" >
+     <div class="topDiv"></div>
+     <div class="bottomDiv"></div>
+      </div>
+     {{ this.user.name }}
+     <button (click)="this.parent.logOut()" class="logOut">{{this.logout}}</button>
+    </div>
+    </div>
+<div class="myFlexCol myDate">
+  <div>
+    {{this.date}}
+  </div>
+  <div>
+    {{this.time}}
+  </div>
+  
+</div>
+  <!-- <div class="myLogout" (click)="this.logout()">Logout</div>
+  <div class="myGreeting">Hello {{currentUser}}! <span class="rotateDown"></span> </div>
+  <div [ngClass]="{'myIcon':true,'troll':this.currentUser =='Troll'}">
+    
+  </div>
+    <a class="myHome" routerLink="/main" (click)=this.setRouteMain()></a>
+  <div class="filler"></div> -->
+</header>

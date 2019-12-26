@@ -1,0 +1,265 @@
+@import url('form.less');
+@import url('flex.less');
+@import url('width.less');
+// .mySelection{
+//         height: 100%;
+//         width: 55%;
+// }
+.myAddForm{
+    // padding: 2% 10%;
+    // padding-left: 12%;
+    width: 100%;
+    padding: 0 2%;
+    // height: 30vh;
+    overflow-y: auto;
+    height: 96%;
+    // background: #FFFFFF;
+    // height: 99.6%;
+    /* margin-bottom: 4px; */
+    // border-radius: 4px;
+    /* padding: 4px; */
+    // box-shadow: 1px 1px 1px rgba(100, 100, 100, 0.2);
+    position: relative;
+}
+.myContactEntries{
+    height: 15.8vh;
+    overflow: auto;
+}
+.tableContainer2{
+    width: 100%;
+    height: calc(40px*12);
+    // height: 32vh;
+}
+.myAutoComplete{
+
+    /* transform: translateY(200%); */
+    z-index: 4;
+    // position: absolute;
+    top: 0%;
+    // transform: translateY(-100%);
+    border-radius: 6px;
+    // border: 1px solid grey;
+    left: 0;
+    overflow: auto;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+    max-height: 10vh;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: 100%;
+    margin: 1vmin 0;
+    // background: white;
+}
+.myAutoCompleteEntry{
+    color:#1BA6C5;
+    padding: 1%;;
+   line-height: 120%;
+   cursor: pointer;
+//    height: 4vh;
+}
+
+.myDescription{
+    margin: 1vmin 0;
+    height: 10vh;
+    text-overflow: auto;
+    overflow: auto;
+ line-height: 140%;
+    padding: 1%;
+    margin-top: calc(1vmin + 0.6em);
+}
+.myHeader{
+    font-size: 1.2em;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px rgba(100,100,100,0.2);
+    // text-decoration: underline;
+}
+.myTableHeader{
+    // height: 2vh;
+
+    border-bottom:1px solid;
+    border-color:var(--element4,#E4E5ED) ;
+    background-color: var(--element2,#F9FAFC);
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: calc(0.45em + 0.4vw );
+     line-height: 1.42857143;
+     color: #333;
+     background-color: #fff;
+      padding: 8px 0;
+      font-weight: bold;
+    
+
+}
+.myAddContactHeader{
+    width: 100%;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0px;
+    padding: 0;
+    margin: 0;
+    z-index: 20;
+    background: white; 
+}
+
+.myAddContactButton{
+    width:30%;
+    height:2em;
+    font-size: 1.2em;
+    background:  var(--font1hover,#51CCA1);
+    color:white;
+    border-radius: 4px;
+    box-shadow: 1px 1px 1px rgba(100,100,100,0.2);
+    // position: sticky;
+    // right:0%;
+    bottom:0px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    margin-bottom: 2vh;
+}
+.myButtonIcon{
+    text-align: center;
+    position: relative;
+    margin-left: 15px;
+    margin-right: 15px;
+
+    // color: red;
+    // position: absolute;
+    background-color: transparent;
+    font-size: calc(0.5em + 0.7vw);
+    // margin-top:5px;
+    // width: calc(0.3em + 0.6vw);
+    // height: calc(0.3em + 0.6vw);
+    border:none;
+    color:var(--element10, #4098FE);
+}
+.myButtonIcon:hover{
+    cursor: pointer;
+    color:var(--element3hover, #75E5BE);
+    // text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.8);
+//    color:grey;
+//    filter: brightness(125%);
+}
+  .myButton{
+    color: var(--element12, #FFFFFF);
+    font-size: calc(0.3em + 0.3vw);
+    font-family: Roboto;
+    border-radius: 4px;
+    line-height: 1vw;
+    height: 1vw;
+    width: 3vw;
+    min-width: fit-content;
+    background: var(--element10, #4098FE);
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    border: none;
+    cursor: pointer;
+    margin-left: 2%;
+    // margin-top: 1%;
+  }
+  .myButton:hover{
+    background:var(--element3hover,#75E5BE);
+  }
+  .myButton:active{
+    background:var(--element20,#46BC93);
+  }
+ .myRow{
+    border-bottom:1px solid;
+    border-color:var(--element4,#E4E5ED) ;
+    background-color: var(--element2,#F9FAFC);
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: calc(0.45em + 0.4vw );
+     line-height: 1.42857143;
+     color: #333;
+     background-color: #fff;
+  }
+ .myRowMenu{
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        height: 1.2vw;
+        margin: 5px 0 0px;
+        min-height: 1.04166667vw;
+        justify-content: space-around;
+        // border-left:1px solid var(--element4,#E4E5ED);
+    }
+ .disabled input[type="text"],.disabled input[type="number"]{
+        border: none;
+        outline:none;
+        background-color: transparent;
+    }
+    input[type="checkbox"]{
+        display: inline-block !important;
+    }
+    .small input[type="text"], .small input[type="number"]{
+        height:1.2vw;
+    }
+    .disabledButton{
+        filter: brightness(50%);
+        opacity: 0.9;
+        cursor: not-allowed;
+    }
+    .myOdd{
+  
+      font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+       font-size: calc(0.45em + 0.4vw );
+        line-height: 1.42857143;
+        color: #333;
+    //     background-color: var(--background2, #FBFBFD);
+    // color: var(--font3, #9FAABD);
+        background-color: #f9f9f9;
+     }
+
+     .myDate{
+        width: 30%;
+        height: 9vh;
+    }
+    // .form-group-date-from{
+    //     position: relative;
+    // }
+    // .form-group-date-from i{
+    //     position: absolute;
+    //     top: 50%;
+    //     left: 2px;
+    //     cursor: pointer;
+    //     pointer-events: none;
+    // }
+    // .form-group-date-to{
+    //     position: relative;
+    // }
+    // .form-group-date-to i{
+    //     position: absolute;
+    //     top: 50%;
+    //     left: 2px;
+    //     cursor: pointer;
+    //     pointer-events: none;
+    // }
+    .myPopUp{
+        top: 0;
+        left: 0;
+        z-index: 45;
+        height: 100vh;
+        width: 100vw;
+        position: fixed;
+        background-image: var(--mainBackgroundImage,linear-gradient( #9f67a0, #253544));
+    }
+    .myQuerry{
+        font-size: 24px;
+        z-index: 11;
+       top:50%;
+       left: 50%;
+       transform: translate(-50%,-50%);
+        position: fixed;
+    }
+    .myplus{
+        transform: scale(0.74);
+        cursor: pointer;
+    }
+    .myDateEntry{
+        // width: 50%;
+        color: lightseagreen;
+        // line-height: 140%;
+        text-shadow: 0px 1px 1px;
+    }

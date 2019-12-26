@@ -1,0 +1,27 @@
+<div class="pageHeader myFlexRow">
+    <div class="width50"></div>
+  <span>
+    {{ 'Products Table' | myTranslator : this.glob.language }}
+  </span>
+  <div class="width50 myFlexRow myFlexEnd">
+      <button *ngIf="isAdminUse" class="mySaveButton" (click)="addNew()">{{ 'Add New Product' | myTranslator : this.glob.language }}</button>
+  </div>
+</div>
+
+<section class="mySection ">
+    <form [formGroup]="productsTableForm" class="mySelection myFlexRow myFlexSpaceAround myFlexAlignCenter myShadowBox">
+     
+  
+      <div class="form-group3 form-group-id">
+          <input type="text" required="" autocomplete="off" (input)="this.searchProducts()" [placeholder]="'Search' | myTranslator : this.glob.language" class="form-control" formControlName="searchProducts" id="searchProducts">
+          <i class="mySeachIcon fas fa-search"></i>
+       </div>
+       
+      
+    </form>
+  
+
+    <div class="tableContainer myShadowBox"  #tableBonds>
+      <app-table class="myTable3" [parent]="instance" [tableStructure]="tableStructure" [tableData]="ParentProductsTableData" [myStyle]="myStyle" ></app-table>
+    </div>
+  </section>

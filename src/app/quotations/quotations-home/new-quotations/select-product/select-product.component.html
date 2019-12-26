@@ -1,0 +1,75 @@
+
+
+<td  [ngClass]="{'notAvb': this.isProdAvilabl}">
+  <!-- product Name-->
+  <input matInput placeholder="חפש מוצר" [formControl]="prodForm" [matAutocomplete]="auto1">
+  <mat-autocomplete (optionSelected)="setProductitem($event.option);" #auto1="matAutocomplete" [displayWith]="displayFn">
+    <mat-option *ngFor="let prod of filterPoducts | async" [value]="prod">
+      {{prod.Name}}
+    </mat-option>
+  </mat-autocomplete>
+</td>
+<td  [ngClass]="{'notAvb': this.isProdAvilabl}">
+  <!-- product quantity-->
+  <!-- <div class="input-group ">
+    <div class="input-group-prepend">
+      <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="btn btn-outline-secondary"
+        type="button" id="button-addon1">-</button>
+      <input [(ngModel)]="productQuantity" value="productQuantity" min="0" name="quantity"  type="number"  aria-describedby="button-addon1">
+      <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="btn btn-outline-secondary"
+        type="button" id="button-addon2">+</button>
+ 
+    </div>  </div> -->
+    <input type="number"  (blur)="getProductTotalPrice()" 
+    min="0" matInput placeholder="כמות" >
+ 
+</td>
+<td  [ngClass]="{'notAvb': this.isProdAvilabl}">
+  <!-- days num-->
+  <p > {{(this.dates | dayCount : this.daysChanged).replace(': ', '')}}</p >
+</td>
+<td  [ngClass]="{'notAvb': this.isProdAvilabl}">
+  <!-- price befor discount-->
+  {{priceDisplay}}
+</td>
+
+<td  [ngClass]="{'notAvb': this.isProdAvilabl}">
+  <!-- discount-->
+  <input [(ngModel)]="discount" (blur)="getProductTotalPrice()"
+   value="discount" type="number" min="0" matInput placeholder="הנחה" >
+
+</td>
+<td  [ngClass]="{'notAvb': this.isProdAvilabl}">
+  <!-- price after discount-->
+  {{productPricAftrdisc}}
+</td>
+<td  [ngClass]="{'notAvb': this.isProdAvilabl}">
+    <!-- product dates-->
+    <div  >
+      <ng-container *ngFor="let date of this.dates;let i=index">
+        <div class="dateHolder" [id]="'parentEl'+ this.indeX" [ngClass]="{'myFlexRow':true,'myStikyBottom':(i == this.dates.length-1)}">
+          <app-date-picker  [prodindex]="this.indeX" [dateRange]="date['date_range']" [myStyle]="this.myStyle" [parent]="this.instance"
+            [id]="date.dateId" (newDate)="newDateInput($event);"></app-date-picker>
+            <button *ngIf="i != 0 && i != this.dates.length-1" style="margin-top: 6px;"
+            [ngClass]="{'myButton': false,'myButtonIcon':true}" (click)="removeDate(i,0)"><i
+              class="fas fa-trash-alt"></i></button>
+        </div>
+      </ng-container>
+      
+    </div>
+</td>
+<td  [ngClass]="{'notAvb': this.isProdAvilabl}">  <!-- total price--->
+  {{productTotalPrice}}
+</td>
+<td>
+<div [ngClass]="'buttons'+ i" class="buttons">
+
+  <button mat-icon-button color="warn" (click)="removeproductitem(i)"
+    aria-label="Example icon-button with a heart icon">
+    <mat-icon>remove_circle</mat-icon>
+  </button>
+  <button mat-icon-button color="primary" (click)="addproductitem(i)" aria-label="Add product">
+    <mat-icon>add_circle</mat-icon>
+  </button>
+  </div>
+</td>

@@ -1,0 +1,10 @@
+
+<app-header [user]="{}" [logout]="''" [header]="'Log In' | myTranslator : this.glob.language" [parent]="{}"></app-header>
+<div  class="myLogin">
+  <form  [formGroup]="loginForm">
+    <h1>{{'Sign in' | myTranslator : this.glob.language}}</h1>
+    <input class="usernameInput" [placeholder]="'Username' | myTranslator : this.glob.language"  type="text" formControlName="username" required="">
+    <input  class="passwordInput" [placeholder]="'Password' | myTranslator : this.glob.language"  type="password" formControlName="password" required="">
+    <button (click)='this.submitLogin()'> {{'Submit' | myTranslator : this.glob.language}}</button>
+  </form>
+</div>

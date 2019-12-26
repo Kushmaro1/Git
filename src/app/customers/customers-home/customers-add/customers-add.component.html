@@ -1,0 +1,178 @@
+<!-- <section class="mySelection"> -->
+  <div class="pageHeader myFlexRow">
+    <div class="width50"></div>
+    <span>
+      {{ this.header | myTranslator : this.glob.language }}
+    </span>
+    <div class="width50 myFlexRow myFlexEnd"> 
+       <button class="mySaveButton" (click)="submitForm()">{{'Save' | myTranslator : this.glob.language}}</button>
+      <button class="myEditButton" (click)="comeBack()">{{'Back' | myTranslator : this.glob.language}}</button>
+    </div>
+  </div>
+  <form  [formGroup]="customerAddForm" class="myAddForm myFlexRow">
+     
+    <article class="myShadowBox width70 myHeight">
+
+      <section class="myFlexRow myFlexSpaceBetween">
+        <div class="form-group width40 myFlexCol" >
+          <span class='singleLine'>
+            {{'Full Name' | myTranslator : this.glob.language}}<span class="myRequired">*</span>
+          </span>
+            <input type="text"   [ngClass]="{'borderError': customerAddForm.get('full_name').touched && customerAddForm.get('full_name').hasError('required')}"  autocomplete="off"  class="form-control" formControlName="full_name" id="nameAdd">
+         </div>
+         <div class="form-group width40 myFlexCol">
+            {{'Address' | myTranslator : this.glob.language}}
+              <input type="text"  autocomplete="off"  class="form-control" formControlName="streat_addres" id="addressAdd">
+           </div>     
+      </section>
+      <section class="myFlexRow myFlexSpaceBetween">
+          <div class="form-group width40 myFlexCol">
+              <span class='singleLine'>
+            {{'ID' | myTranslator : this.glob.language}}
+            </span>
+              <input type="text"  autocomplete="off"  class="form-control"  [ngClass]="{'borderError': false}" formControlName="company_id" id="idAdd">
+           </div>
+           <div class="form-group width40 myFlexCol">
+              {{'City' | myTranslator : this.glob.language}}
+                <input type="text"  autocomplete="off"  class="form-control" formControlName="city" id="cityAdd">
+             </div>
+      </section>
+      <section class="myFlexRow myFlexSpaceBetween">
+          <div class="form-group width40 myFlexCol">
+              <span class='singleLine'>
+            {{'Email' | myTranslator : this.glob.language}}<span class="myRequired">*</span>
+          </span>
+              <input type="text"  autocomplete="off" [ngClass]="{'borderError': customerAddForm.get('email').touched && (customerAddForm.get('email').hasError('required') || customerAddForm.get('email').hasError('email'))}" class="form-control" formControlName="email" id="emailAdd">
+           </div>
+           <div class="form-group width40 myFlexCol">
+            {{'ZIP' | myTranslator : this.glob.language}}
+              <input type="text"  autocomplete="off"  class="form-control" formControlName="area_code" id="zipAdd">
+           </div>
+      </section>
+      <section class="myFlexRow myFlexSpaceBetween">
+          <div class="form-group width40 myFlexCol">
+              {{'Phone' | myTranslator : this.glob.language}}
+                <input type="text"  autocomplete="off"  class="form-control" formControlName="phone" id="phoneAdd">
+          </div>
+      
+           
+            <div class="form-group width40 myFlexCol">
+              {{'Country' | myTranslator : this.glob.language}}
+                <input type="text"  autocomplete="off"  class="form-control" formControlName="country" id="countryAdd">
+             </div>
+      </section>
+      <section class="myFlexCol myFlexSpaceBetween">
+          <div class="form-group width40"  style="margin-bottom: 2vh;" >
+              <label for="category">
+                <span>       
+                </span>
+                <span class='singleLine'>
+                   
+                   {{ 'Customer Category' | myTranslator : this.glob.language }}<span class="myRequired">*</span>
+                </span>
+              </label>
+               <select [value]="this.customerAddForm.value['category'] | myTranslator : this.glob.language" class="form-control" [ngClass]="{'borderError': customerAddForm.get('client_category').touched && customerAddForm.get('client_category').hasError('required')}" formControlName="client_category" id="categoryAdd">
+                  <option  *ngFor='let category of this.categories;let m=index;' [value]="category">
+                      {{ category | myTranslator : this.glob.language }}
+                  </option>
+              </select>
+        </div>
+          <div class="form-group width40"   >
+              <label for="category">
+                <span>       
+                </span>
+                <span class='singleLine'>
+                   
+                   {{ 'Terms of Payment' | myTranslator : this.glob.language }}<span class="myRequired">*</span>
+                </span>
+              </label>
+               <select [value]="this.customerAddForm.value['payment'] | myTranslator : this.glob.language" class="form-control" [ngClass]="{'borderError': customerAddForm.get('payment_method').touched && customerAddForm.get('payment_method').hasError('required')}" formControlName="payment_method" id="paymentAdd">
+                  <option  *ngFor='let payment of this.payments;let m=index;' [value]="payment">
+                      {{ payment | myTranslator : this.glob.language }}
+                  </option>
+              </select>
+        </div>
+      </section>
+    </article>
+    <article class="myShadowBox width30 myHeight">
+
+        <textarea class="myTextarea" 
+        
+        class="myDescription"
+        [placeholder]="'Comments' | myTranslator : this.glob.language"
+        [ngClass]="{'borderError': customerAddForm.get('remarks').touched && customerAddForm.get('remarks').hasError('required')}"
+        formControlName="remarks"></textarea>
+      </article>
+  
+  </form>
+  <section class="myFlexRow myFlexEnd">
+  <div class="myAddForm ">
+
+    <article class="myShadowBox ">
+
+      <div class="myHeader">
+        {{'Contacts' | myTranslator : this.glob.language}}
+      </div>
+      <section class=" myContactEntries">
+          <div class="myAddContactHeader">
+            <div class="myTableHeader myFlexRow">
+              <span class="width20">
+                {{ 'Position' | myTranslator : this.glob.language }}
+              </span>
+              <span class="width20">
+                {{ 'Full Name' | myTranslator : this.glob.language }}
+              </span>
+              <span class="width20">
+                {{ 'Phone' | myTranslator : this.glob.language }}
+              </span>
+              <span class="width20">
+                {{ 'Email' | myTranslator : this.glob.language }}
+              </span>
+              <span class="width20" style="
+              text-align: center;">
+                {{ 'Actions' | myTranslator : this.glob.language }}              
+              </span>
+            </div>
+          </div>
+          <div [ngClass]="{'myFlexCol':true, 'myRow':true,'myOdd':((i+1)%2)}" *ngFor="let contact of this.contacts;let i=index;">
+              <div class="width100 myFlexRow">
+                  <span class="width20">
+                    <div class="form-group small width100 myFlexCol"  [ngClass]="{'disabled':this.edit!=i}">
+                          <input type="text"  autocomplete="off" [attr.id]="'positionfield' + i"  (keydown.enter)="this.nextField($event,'namefield',i)" [disabled]="this.edit!=i" class="form-control" (input)="this.setContatc($event,i,'job')" [value]="contact.job">
+                    </div>
+                    <!-- {{ 'Position' | myTranslator : this.glob.language }} -->
+                  </span>
+                  <span class="width20">
+                      <div class="form-group small width100 myFlexCol"  [ngClass]="{'disabled':this.edit!=i}">
+                          <input type="text"  autocomplete="off" [attr.id]="'namefield' + i" [disabled]="this.edit!=i" (keydown.enter)="this.nextField($event,'phonefield',i)" class="form-control" (input)="this.setContatc($event,i,'full_name')" [value]="contact.full_name">
+                    </div>
+                    <!-- {{ 'Full Name' | myTranslator : this.glob.language }} -->
+                  </span>
+                  <span class="width20">
+                      <div class="form-group small width100 myFlexCol"  [ngClass]="{'disabled':this.edit!=i}">
+                          <input type="text"  autocomplete="off" [attr.id]="'phonefield' + i" (keydown.enter)="this.nextField($event,'emailfield',i)" [disabled]="this.edit!=i" class="form-control" (input)="this.setContatc($event,i,'phone')" [value]="contact.phone">
+                    </div>
+                    <!-- {{ 'Phone' | myTranslator : this.glob.language }} -->
+                  </span>
+                  <span class="width20">
+                      <div class="form-group small width100 myFlexCol" [ngClass]="{'disabled':this.edit!=i}" >
+                          <input type="text"  autocomplete="off" [attr.id]="'emailfield' + i"  (keydown.enter)="this.editEntry(i)" [disabled]="this.edit!=i" class="form-control" (input)="this.setContatc($event,i,'email')" [value]="contact.email">
+                    </div>
+                    <!-- {{ 'Email' | myTranslator : this.glob.language }} -->
+                  </span>
+                  <span class="width20 myFlexRow myFlexCenter myFlexSpaceAround myRowMenu">      
+                          <button [ngClass]="{'myButton': false,'myButtonIcon':true}"   (click)="this.editEntry(i)"><i class="fas fa-user-edit"></i></button>
+                          <!-- <button [ngClass]="{'myButton': false,'myButtonIcon':true}"   (click)="this.editEntry(i)">{{ 'Edit' | myTranslator : this.glob.language }}</button> -->
+                          <!-- <button [ngClass]="{'myButton': true,'myButtonIcon':false}"   (click)="contactAction('delete',$event,i)">{{ 'Delete' | myTranslator : this.glob.language }}</button>             -->
+                          <button [ngClass]="{'myButton': false,'myButtonIcon':true}"   (click)="contactAction('delete',$event,i)"><i class="fas fa-trash-alt"></i></button>            
+                  </span>
+                </div>
+          </div>
+        </section>
+        <button class="myAddContactButton"  (click)="contactAction('add','',-1)">{{'Add New Contact' | myTranslator : this.glob.language}}</button>
+        </article>
+  </div>
+
+  </section>
+    
+<!-- </section> -->

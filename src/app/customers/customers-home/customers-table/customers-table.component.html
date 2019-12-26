@@ -1,0 +1,55 @@
+<div class="pageHeader myFlexRow">
+    <div class="width50"></div>
+  <span>
+    {{ 'Customers Table' | myTranslator : this.glob.language }}
+  </span>
+  <div class="width50 myFlexRow myFlexEnd">
+      <button class="mySaveButton" (click)="addNew()">{{ 'Add New' | myTranslator : this.glob.language }}{{ ' ' }}{{ 'Customer' | myTranslator : this.glob.language }}</button>
+  </div>
+</div>
+<section class="mySection ">
+    <form [formGroup]="customerTableForm" class="mySelection myFlexRow myFlexSpaceAround myFlexAlignCenter myShadowBox">
+      <div class="form-group form-group-enlimit">
+         <label for="category">
+           <span>       
+           </span>
+           <span class='singleLine'>
+              
+             
+           </span>
+         </label>
+          <select [value]="this.customerTableForm.value['category']" (change)="this.searchClients()" class="form-control" formControlName="category" id="category">
+              <option  [value]="">
+                  {{ 'Categories' | myTranslator : this.glob.language }}
+              </option>
+             <option  *ngFor='let category of this.categories;let m=index;' [value]="category">
+                 {{ category | myTranslator : this.glob.language }}
+             </option>
+         </select>
+  </div>
+      <div class="form-group3 form-group-id">
+          <input type="text" required="" autocomplete="off" (input)="this.searchClients()" [placeholder]="'Search' | myTranslator : this.glob.language" class="form-control" formControlName="searchCustomers" id="searchCustomers">
+          <i class="mySeachIcon fas fa-search"></i>
+       </div>
+       
+       <!-- <div class="form-group form-group-enlimit">
+          <label for="limit">
+            <span>       
+            </span>
+            <span class='singleLine'>
+                {{ 'Entries Limit' | myTranslator : this.glob.language }}
+                  
+            </span>
+          </label>
+           <select [value]="this.customerTableForm.value['limit']" class="form-control" formControlName="limit" id="limit">
+              <option  *ngFor='let limit of this.limits;let m=index;' [value]="limit">
+                  {{ limit }}
+              </option>
+          </select>
+   </div> -->
+    </form>
+   
+    <div class="tableContainer myShadowBox"  #tableBonds>
+      <app-table class="myTable3" [parent]="instance" [tableStructure]="tableStructure" [tableData]="tableData" [myStyle]="myStyle" ></app-table>
+    </div>
+  </section>

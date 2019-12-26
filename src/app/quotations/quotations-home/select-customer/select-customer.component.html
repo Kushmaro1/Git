@@ -1,0 +1,38 @@
+<section class="mySection ">
+    <form [formGroup]="customerTableForm" class="mySelection myFlexRow myFlexSpaceAround myFlexAlignCenter myShadowBox">
+      <div class="form-group form-group-enlimit">
+         <label for="category">
+           <span>       
+           </span>
+           <span class='singleLine'>
+              
+             
+           </span>
+         </label>
+          <select [value]="this.customerTableForm.value['category']" (change)="this.searchClients()" class="form-control" formControlName="category" id="category">
+              <option  [value]="">
+                  {{ 'Categories' | myTranslator : this.glob.language }}
+              </option>
+             <option  *ngFor='let category of this.categories;let m=index;' [value]="category">
+                 {{ category | myTranslator : this.glob.language }}
+             </option>
+         </select>
+  </div>
+      <div class="form-group3 form-group-id">
+          <input type="text" required="" autocomplete="off" (input)="this.searchClients()" [placeholder]="'Search' | myTranslator : this.glob.language" class="form-control" formControlName="searchCustomers" id="searchCustomers">
+          <i class="mySeachIcon fas fa-search"></i>
+       </div>
+    </form>
+   
+    <div class="tableContainer myShadowBox"  #tableBonds>
+      <app-table class="myTable3" [parent]="instance" [tableStructure]="tableStructure" [tableData]="tableData" [myStyle]="myStyle" ></app-table>
+    </div>
+  </section>
+  <form class="example-form">
+      <input type="text" placeholder="Search for a street" [formControl]="control" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let street of filteredStreets | async" [value]="street">
+          {{street}}
+        </mat-option>
+      </mat-autocomplete>
+    </form>

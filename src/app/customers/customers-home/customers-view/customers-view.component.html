@@ -1,0 +1,145 @@
+<div class="pageHeader myFlexRow">
+    <div class="width50"></div>
+    <span>
+      {{ 'Customer Data' | myTranslator : this.glob.language }}
+    </span>
+    <div class="width50 myFlexRow myFlexEnd">    
+      <button class="myEditButton" (click)="comeBack()">{{'Back' | myTranslator : this.glob.language}}</button>
+      <button class="myEditButton" (click)="editCustomer()">{{'Edit' | myTranslator : this.glob.language}}</button>
+    </div>
+</div>
+<article class="myAddForm myFlexRow myRemarks">  
+  
+       <section class="myFlexCol myDataEntry myShadowBox">
+         <div class="myFlexRow myFlexSpaceBetween">
+           <div class="width49 myFlexRow myFlexSpaceBetween ">
+             <span> {{'Full Name' | myTranslator : this.glob.language}}{{' - '}}</span><span>{{  this.customer['full_name'] | myTranslator : this.glob.language}}</span>
+           </div>
+           <div class="width49 myFlexRow myFlexSpaceBetween ">
+            <span> {{ 'Terms of Payment' | myTranslator : this.glob.language }}{{' - '}}</span><span>{{  this.customer['payment_method'] | myTranslator : this.glob.language}}</span>
+           </div>
+         </div>
+         <div class="myFlexRow myFlexSpaceBetween">
+           <div class="width49 myFlexRow myFlexSpaceBetween ">
+             <span> {{'ID' | myTranslator : this.glob.language}}{{' - '}}</span><span>{{ this.customer['company_id'] | myTranslator : this.glob.language}}</span>
+           </div>
+           <div class="width49 myFlexRow myFlexSpaceBetween ">
+             <span> {{'Address' | myTranslator : this.glob.language}}{{' - '}}</span><span>{{ this.customer['streat_addres'] | myTranslator : this.glob.language}}</span>
+           </div>
+         </div>
+         <div class="myFlexRow myFlexSpaceBetween">
+           <div class="width49 myFlexRow myFlexSpaceBetween ">
+            <span> {{'Email' | myTranslator : this.glob.language}}{{' - '}}</span><a [href]="'mailto:'+this.customer['email']">{{ this.customer['email'] | myTranslator : this.glob.language}}</a>
+           </div>
+           <div class="width49 myFlexRow myFlexSpaceBetween ">
+             <span> {{'City' | myTranslator : this.glob.language}}{{' - '}}</span><span>{{  this.customer['city'] | myTranslator : this.glob.language}}</span>
+           </div>
+         </div>
+         <div class="myFlexRow myFlexSpaceBetween">
+           <div class="width49 myFlexRow myFlexSpaceBetween ">
+             <span>  {{'Phone' | myTranslator : this.glob.language}}{{' - '}}</span><span>{{  this.customer['phone'] | myTranslator : this.glob.language}}</span>
+           </div>
+           <div class="width49 myFlexRow myFlexSpaceBetween ">
+            <span> {{'ZIP' | myTranslator : this.glob.language}}{{' - '}}</span><span>{{ this.customer['area_code'] | myTranslator : this.glob.language}}</span>
+           </div>
+         </div>
+         <div class="myFlexRow myFlexSpaceBetween">
+           <div class="width49 myFlexRow myFlexSpaceBetween ">
+            <span> {{ 'Customer Category' | myTranslator : this.glob.language }}{{' - '}}</span><span>{{ this.customer['client_category'] | myTranslator : this.glob.language}}</span>
+           </div>
+           <div class="width49 myFlexRow myFlexSpaceBetween ">
+              <span> {{'Country' | myTranslator : this.glob.language}}{{' - '}}</span><span>{{ this.customer['country'] | myTranslator : this.glob.language}}</span>
+           </div>
+         </div>
+       </section>
+    
+       <article class="myShadowBox myContactTable width50">   
+          <div class="myHeader">
+           {{'Contacts' | myTranslator : this.glob.language}}
+       </div>
+       <section class="myContactEntries">
+          <div class="myAddContactHeader">
+            <div class="myTableHeader myFlexRow">
+              <span class="width25">
+                {{ 'Position' | myTranslator : this.glob.language }}
+              </span>
+              <span class="width25">
+                {{ 'Full Name' | myTranslator : this.glob.language }}
+              </span>
+              <span class="width25">
+                {{ 'Phone' | myTranslator : this.glob.language }}
+              </span>
+              <span class="width25">
+                {{ 'Email' | myTranslator : this.glob.language }}
+              </span>
+              <!-- <span class="width20" style="
+              text-align: center;">
+                {{ 'Actions' | myTranslator : this.glob.language }}              
+              </span> -->
+            </div>
+          </div>
+          <div [ngClass]="{'myFlexCol':true, 'myRow':true,'myOdd':((i+1)%2)}" *ngFor="let contact of this.contacts;let i=index;">
+              <div class="width100 myFlexRow">
+                  <span class="width20">
+                    <div class="form-group small width100 myFlexCol"  [ngClass]="{'disabled':this.edit!=i}">
+                          <input type="text"  autocomplete="off" [attr.id]="'positionfield' + i"  (keydown.enter)="this.nextField($event,'namefield',i)" [disabled]="this.edit!=i" class="form-control" (input)="this.setContatc($event,i,'job')" [value]="contact.job">
+                    </div>
+                    <!-- {{ 'Position' | myTranslator : this.glob.language }} -->
+                  </span>
+                  <span class="width20">
+                      <div class="form-group small width100 myFlexCol"  [ngClass]="{'disabled':this.edit!=i}">
+                          <input type="text"  autocomplete="off" [attr.id]="'namefield' + i" [disabled]="this.edit!=i" (keydown.enter)="this.nextField($event,'phonefield',i)" class="form-control" (input)="this.setContatc($event,i,full_name)" [value]="contact.full_name">
+                    </div>
+                    <!-- {{ 'Full Name' | myTranslator : this.glob.language }} -->
+                  </span>
+                  <span class="width20">
+                      <div class="form-group small width100 myFlexCol"  [ngClass]="{'disabled':this.edit!=i}">
+                          <input type="text"  autocomplete="off" [attr.id]="'phonefield' + i" (keydown.enter)="this.nextField($event,'emailfield',i)" [disabled]="this.edit!=i" class="form-control" (input)="this.setContatc($event,i,'phone')" [value]="contact.phone">
+                    </div>
+                    <!-- {{ 'Phone' | myTranslator : this.glob.language }} -->
+                  </span>
+                  <span class="width20">
+                      <div class="form-group small width100 myFlexCol" [ngClass]="{'disabled':this.edit!=i}" >
+                          <input type="text"  autocomplete="off" [attr.id]="'emailfield' + i"  (keydown.enter)="this.editEntry(i)" [disabled]="this.edit!=i" class="form-control" (input)="this.setContatc($event,i,'email')" [value]="contact.email">
+                    </div>
+                    <!-- {{ 'Email' | myTranslator : this.glob.language }} -->
+                  </span>
+                  <!-- <span class="width20 myFlexRow myFlexCenter myFlexSpaceAround myRowMenu">      
+                          <button [ngClass]="{'myButton': true,'myButtonIcon':false}"   (click)="this.editEntry(i)">{{ 'Edit' | myTranslator : this.glob.language }}</button>
+                          <button [ngClass]="{'myButton': true,'myButtonIcon':false}"   (click)="contactAction('delete',$event,i)">{{ 'Delete' | myTranslator : this.glob.language }}</button>            
+                  </span> -->
+                </div>
+          </div>
+        </section>
+       </article>
+
+</article>
+<section  class="myFlexRow myRemarks">
+  <article *ngIf="isAdminUse" class="myShadowBox myTablesBox">
+    <div class="myHeader">
+        {{'Quotations' | myTranslator : this.glob.language}}
+    </div>
+    <section class="tableContainer2"  #tableBonds>
+        <app-table  [parent]="instance" [tableStructure]="tableStructure2" [tableData]="tableData2" [myStyle]="myStyle2" ></app-table>
+    </section>
+  </article>
+  <article class="myShadowBox myTablesBox myLeftTable">
+    <div class="myHeader">
+        {{'Future Orders' | myTranslator : this.glob.language}}
+    </div>
+    <section class="tableContainer2"  #tableBonds>
+        <app-table  [parent]="instance" [tableStructure]="tableStructure3" [tableData]="tableData3" [myStyle]="myStyle2" ></app-table>
+    </section>
+  </article>
+</section>
+<div class="myRemarks"> 
+
+  <div class=" myShadowBox">
+          <div class="myHeader">
+              {{'Comments' | myTranslator : this.glob.language}}
+          </div>
+          <div class="myRem">
+            {{this.customer['remarks']}}
+          </div>    
+  </div>
+</div>

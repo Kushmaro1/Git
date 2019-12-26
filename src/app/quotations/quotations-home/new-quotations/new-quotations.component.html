@@ -1,0 +1,139 @@
+<div class="container-fluid">
+  <div class="head">
+    <div>
+      <form class="example-form">
+        <mat-form-field class="example-full-width">
+          <input type="text" placeholder="בחר לקוח" aria-label="Number" matInput [formControl]="bidForm"
+            [matAutocomplete]="auto">
+          <mat-autocomplete (optionSelected)="setDetails($event.option)" [displayWith]="displayFn" autoActiveFirstOption
+            #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+              {{option.Name}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
+      <label class="mat-label1">מס' ימים {{this.dates | dayCount : this.daysChanged}}</label>
+    </div>
+    <div id="parentEl" *ngIf="!isbidObj">
+      <ng-container *ngFor="let date of this.dates;let i=index">
+        <div [ngClass]="{'myFlexRow':true,'myStikyBottom':(i == this.dates.length-1)}">
+          <app-date-picker [dateRange]="date['date_range']" [myStyle]="this.myStyle" [parent]="this.instance"
+            [id]="date.dateId" (newDate)="newDateInput($event);"></app-date-picker>
+          <button *ngIf="i != 0 && i != this.dates.length-1" style="margin-top: 6px;"
+            [ngClass]="{'myButton': false,'myButtonIcon':true}" (click)="removeDate(i,0)"><i
+              class="fas fa-trash-alt"></i></button>
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="leftSec">
+      <mat-form-field>
+        <mat-label>סטטוס</mat-label>
+        <mat-select (selectionChange)="selectedstat($event)">
+          <mat-option *ngFor="let stat of status" [value]="stat.val">
+            {{stat.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div class="divider"></div>
+      <button (click)="getProductsList()" mat-raised-button color="primary">מעבר לאקספרס</button>
+      <div class="divider"></div>
+      <button mat-raised-button (click)="setClaientObject()" color="warn">שמור</button>
+      <div class="divider"></div>
+      <button mat-raised-button color="primary">שכפל</button>
+      <div class="divider"></div>
+      <button mat-raised-button (click)="bidCancelation()" color="primary">בטל</button>
+    </div>
+  </div>
+  <div class="clientBidDet" *ngIf="!isbidObj">
+    <div >
+      <mat-grid-list cols="3" rowHeight="100">
+        <mat-grid-tile  class="txtAlign">
+          <h4>טלפון : {{bidObj.Phone}}</h4>
+        </mat-grid-tile>
+        <mat-grid-tile  class="txtAlign">
+          <h4>ח"פ : {{bidObj.ID}}</h4>
+        </mat-grid-tile>
+        <mat-grid-tile  class="txtAlign">
+          <h4>לכבוד : {{bidObj.Name}}</h4>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+    <div>
+      <mat-grid-list cols="3" rowHeight="50">
+        <mat-grid-tile></mat-grid-tile>
+        <mat-grid-tile>
+          <h5>דוא"ל : {{bidObj.Mail}}</h5>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <h5>מס' הצעת מחיר : 12345697 </h5>
+        </mat-grid-tile>
+      </mat-grid-list>
+
+    </div>
+    <div class="pojectDet" *ngIf="!isbidObj">
+      <mat-grid-list cols="3" rowHeight="50">
+        <mat-grid-tile>
+            <mat-label for="produceMail" class="col-4 col-form-label">דוא&#39;ל מפיק : </mat-label>
+            <mat-form-field>
+              <input matInput [(ngModel)]="projectName" [ngModelOptions]="{standalone:
+                true}" type="text" class="form-control" id="projectName" placeholder="דוא&#39;ל מפיק">
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-label for="produceName" class="col-4 col-form-label">מפיק בפועל : </mat-label>
+            <mat-form-field>
+              <input matInput [(ngModel)]="producerName" [ngModelOptions]="{standalone:
+            true}" type="text" class="form-control" id="produceName" placeholder="מפיק בפועל">
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-label for="projectName" class="col-4 col-form-label">שם פרוייקט : </mat-label>
+            <mat-form-field>
+              <input matInput [(ngModel)]="producerEmail" [email]="true" [ngModelOptions]="{standalone:
+                true}" type="email" class="form-control" id="produceMail" placeholder="שם פרוייקט">
+            </mat-form-field>
+        </mat-grid-tile>
+
+      </mat-grid-list>
+
+    </div>
+  </div>
+  <!--  -->
+  <div class="produuctSec">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col" style="width: 15%">שם מוצר</th>
+          <th scope="col" style="width: 8%">כמות</th>
+          <th scope="col" style="width: 5%">מס' ימים</th>
+          <th scope="col" style="width: 10%">מחיר ליחידה לפני הנחה</th>
+          <th scope="col" style="width: 10%"> הנחה ליחידה </th>
+          <th scope="col" style="width: 10%">מחיר ליחידה לאחר הנחה</th>
+          <th scope="col" style="width: 27%">תאריכים</th>
+          <th scope="col" style="width: 10%">סה"כ מחיר למוצר </th>
+          <th scope="col" style="width: 5%"><i class="fa fa-folder"></i></th>
+        </tr>
+      </thead>
+
+      <tbody *ngFor="let item of productsItems ; index as i; ">
+        <tr class="tabParent" [indeX]="i" (productEvent)="receiveProductObj($event)" [dateObj]="dates"
+          app-select-product> </tr>
+
+        <div [ngClass]="'buttons'+ i" class="buttons">
+
+          <button mat-icon-button color="warn" (click)="removeproductitem(i)"
+            aria-label="Example icon-button with a heart icon">
+            <mat-icon>remove_circle</mat-icon>
+          </button>
+          <button mat-icon-button color="primary" (click)="addproductitem(i)" aria-label="Add product">
+            <mat-icon>add_circle</mat-icon>
+          </button>
+        </div>
+      </tbody>
+    </table>
+  </div>
+  <!--  -->
+
+</div>

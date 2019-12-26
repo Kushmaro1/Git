@@ -1,0 +1,128 @@
+ .myNav{
+  // padding-top: 10vh;
+    // display:none;
+    // width:100%;
+    
+   font-family: Roboto;
+    width: 85vw;
+    margin: var(--margin1,0px 0 0);
+    font-size: calc(0.6em + 0.3333333333vw);
+}
+
+
+
+ .myNavBox:first-child{
+   border-left:none !important;
+ }
+ .myNavBox:last-child{
+   border-right:none !important;
+ }
+
+
+
+.myNavBox{
+  
+  width:100%;
+  min-width:fit-content;
+  align-items: center;
+  justify-content: center;
+  // padding:0.5vw;
+  border:1px solid var(--element21,#DEE0E7);
+  border-bottom: none;
+  border-left: none;
+  // justify-content: center;
+}
+.myNavBox2{
+
+  // width: 20%;
+  width: 24.8%;
+  margin: 0.1%;
+  min-width:fit-content;
+  align-items: center;
+  justify-content: center;
+  // padding:0.5vw;
+  border:1px solid var(--element21,#DEE0E7);
+  border-bottom: none;
+  border-left: none;
+  // justify-content: center;
+}
+.myWidgetBox{
+  width: 10%;
+  margin: 0.1%;
+  min-width:fit-content;
+  align-items: center;
+  justify-content: center;
+  // padding:0.5vw;
+  border:1px solid var(--element21,#DEE0E7);
+  border-bottom: none;
+  border-left: none;
+}
+
+.myNavBox:first-child{
+  border-left: 1px solid var(--element21,#DEE0E7);
+}
+.myNavItem{
+  flex: 1;
+  min-width:fit-content;
+  background: var(--element2,#253544);
+  width:100%;
+  text-align: center;
+  padding:1.7vh 1vh;
+  // margin-top: 2px;
+  box-shadow: 1px 1px 1px rgba(100,100,100,0.1);
+  border-radius: 4px;
+  // height: 3vh;
+    text-decoration: transparent;
+    border-bottom:0.1vh solid var(--element21,#DEE0E7);
+   
+    color: var(--element25, #FFFFFF);
+    &:hover{
+      background: #1BA6C5;
+      // color: var(--element25, #1BA6C5);
+      // border-bottom:0.3vh solid var(--element25, #1BA6C5);
+      // padding-bottom: 1.7vh;
+      cursor: pointer;
+    }
+    &:active{
+      // color:var(--element25, #1BA6C5);
+      // border-bottom:0.3vh solid var(--element25, #1BA6C5);
+      // border-bottom:none;
+
+      // outline:4px solid var(--element7,#FF9900);
+    }
+  }
+
+  .mySubNavItem{
+    // transform: scale(0.8);
+    margin: 0;
+    padding: 0.7vh 1vh;
+    background: transparent;
+    // color: black;
+    border-bottom: none;
+    box-shadow: none;
+    border-radius: 0%;
+    cursor: pointer;
+    // background: var(--element2,#1BA6C5);
+    filter: brightness(70%);
+
+}
+
+  .mySelectedNav{
+    text-shadow: 1px 1px 1px rgba(100,100,100,0.2);
+    // color:var(--element25, #1BA6C5);
+    background: var(--element2,#1BA6C5);
+    // border-bottom:0.3vh solid var(--element25, #1BA6C5);
+    // padding-bottom: 1.7vh;
+    cursor: default;
+  }
+  .mySelectedSubNav{
+    // color:var(--element25, #1BA6C5);
+    // background: var(--element2,#99b7f6);
+    // border-bottom:0.3vh solid var(--element25, #1BA6C5);
+    // padding-bottom: 1.7vh;
+    cursor: default;
+    filter: brightness(50%);
+  }
+  .underConstruction{
+    filter: brightness(75%);
+  }

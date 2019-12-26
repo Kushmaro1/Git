@@ -1,0 +1,16 @@
+<form [formGroup]="remarksForm" class="myRemarkForm">
+  <div class="myStikyBottom">
+    <div class="form-group width100 myFlexCol" >
+        <input type="text" (keydown.enter)="this.submitRemark()"  [placeholder]="'Comments' | myTranslator : this.glob.language"  autocomplete="off"  class="form-control" formControlName="remark" id="remarkid">
+    </div>
+    {{'Total' | myTranslator : this.glob.language}}{{': '+this.remarks.length}}
+  </div>
+  <!-- <article class="myRemarks"> -->
+    <ng-container *ngFor="let remark of this.remarks">
+        <p class="myEntry">text : {{remark.text}} 
+          | time : {{remark.date}}
+          | user : {{remark.user_name}}</p>
+        <!-- <p class="myEntry">{{remark.text}}</p> -->
+    </ng-container>
+  <!-- </article> -->
+</form>

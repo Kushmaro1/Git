@@ -1,0 +1,139 @@
+<div *ngIf="isAdminUse"  class="myTableMenu myFlexRow myFlexEnd" >
+    <!-- <div *ngIf="this.tableStructure['tableName']" class="myHeader">
+        {{this.tableStructure['tableName'] | myTranslator : this.glob.language}}
+    </div> -->
+    <!-- <span style="font-size: 48px; color: Dodgerblue;">
+        <i class="fas fa-file-pdf"></i>
+      </span> -->
+  <button *ngIf="this.tableStructure['print']" class="print" (click) = "this.printTable()"><i class="fas fa-file-pdf"></i> </button>
+  <button *ngIf="this.tableStructure['email']" class="print" (click) = "this.parent[this.tableStructure['email']]()"><i class="fas fa-at"></i> </button>
+  <!-- <button class="print" (click) = "this.printTable()"><div class="myPrintButton" >{{ 'PDF' | myTranslator : this.glob.language}} <i class="fas fa-file-pdf"></i></div> </button> -->
+</div>
+<div class="tableContainer2" (wheel)="onScroll($event)" (scroll) = "$event.preventDefault();" >
+    <table class="myTable" [ngStyle]=myStyle.table>
+      <tr class="headrow" #myBounds>
+        
+        <!-- <th   [ngStyle]=myStyle.th ngDraggable [bounds]="myBounds" [inBounds]="true" [zIndexMoving]="20" class="myTh" *ngFor="let header of this.tableStructure.headers;let k = index;"  [attr.id]="'header' + k + header">      -->
+          <th   [ngStyle]=myStyle.th class="myTh" *ngFor="let header of this.tableStructure.headers;let k = index;"  [attr.id]="'header' + k + header">     
+            <div class="myThP">
+              <div  *ngIf="!this.tableStructure.searchable.includes(header)">
+                <span [ngStyle]=myStyle.header>{{ this.tableStructure.aliaces[header] | myTranslator : this.glob.language}}</span>
+                <!-- <span *ngIf="!this.showDivS[header] && 1" class="mySymbolButton" (click)="sortThisForMe(header,1);"> &#9660;</span>
+                <span  *ngIf="this.showDivS[header] && 1" class="mySymbolButton"  (click)="sortThisForMe(header,-1);"> &#9650;</span> -->
+              </div> 
+              <div  *ngIf="this.tableStructure.searchable.includes(header)">
+                <div class="form-group form-group-name myFlexRow myFlexAlignCenter myFlexStart">
+                  <!-- <label for="user_name">User Name</label> -->
+                  <input type="text" required="" placeholder="{{this.tableStructure.aliaces[header]}}" [ngStyle]=myStyle.search class="myTableSearch myInputForResize" type=text  [value]="this.mysearch[header]" (input)="searchUpdate($event.target.value,header);">
+                  <!-- <span *ngIf=!this.showDivS[header] class="mySymbolButton" (click)="sortThisForMe(header,1);"> &#9660;</span>
+                  <span  *ngIf=this.showDivS[header] class="mySymbolButton"  (click)="sortThisForMe(header,-1);"> &#9650;</span> -->
+                </div>
+                <!-- <input [ngStyle]=myStyle.search class="myTableSearch" type=text  [value]="this.mysearch[header]" (input)="searchUpdate($event.target.value,header);"> -->
+              </div>
+            </div>               
+          </th>
+          <th class="myTh myActions" [ngStyle]="myStyle.actionsMenu" *ngIf=(Object.keys(this.tableStructure.buttons).length)>{{'Actions' | myTranslator : this.glob.language}} </th>
+
+        </tr>
+        <ng-container *ngIf = "(this.tableShowData) as result">
+        <ng-container  *ngFor="let row of this.tablePageData;let i = index;">
+          <tr (dblclick)="this.clickOnRow(row)" [ngClass]="{'myTr': true,'myOdd':((i+1)%2)}"  [ngStyle]="this.tableStructure['accent'] ? (myStyle['accent'][row[this.tableStructure['accent']]] ? myStyle['accent'][row[this.tableStructure['accent']]] : myStyle.row[i]): (myStyle.row ? myStyle.row[i]:{})">
+            <td class="myTd"  *ngFor="let field of this.tableStructure.headers ;let n = index;" [ngClass]="{'ellipsis':this.tableStructure.eclipsis[field]}"  [ngStyle]="this.hoverf[field] ? ((this.hoverf[field][i] &&  myStyle.cell[field+'Hover']) ? myStyle.cell[field+'Hover'] : myStyle.cell[field]) : {}" (mouseover)="this.hoverOnField(true,i,field)" (mouseleave)="this.hoverOnField(false,i,field)" [attr.but]="row[field]  | myTranslator : this.glob.language" [attr.row]="i">
+              <span *ngIf="!(this.tableStructure['editable'][field]) && !(row[field+'_editable'])" [ngStyle]=this.tableStructure.iconStyle[row[field]] [ngClass]="{'clickable': this.tableStructure.cellButtons[field],'myCellIcon':tableStructure.icon[field] }" [attr.but]="row[field] | myTranslator : this.glob.language" [attr.row]="i"   (click)="cellButtonAction(field,$event,row)">{{ tableStructure.icon[field] ? tableStructure.icon[field]  : row[field]  | myTranslator : this.glob.language}}</span>
+              <input *ngIf="(this.tableStructure['editable'][field] == 'text') || (!(this.tableStructure['editable'][field]) && row[field+'_editable'])"  [ngStyle]=myStyle.input [attr.id]="'field' +i+ n" type="text" [attr.row]="i" [ngClass]="{'editable': this.tableStructure['editable'][field]}" (input)="newInput($event, field, i, row);" [value]=row[field] [readonly]="false">
+              <input *ngIf="(this.tableStructure['editable'][field] == 'number')" [ngStyle]=myStyle.input [attr.id]="'field' +i+ n" type="number" [attr.row]="i" [ngClass]="{'editable': this.tableStructure['editable'][field]}" (input)="newInput($event, field, i, row);" [value]=row[field] [readonly]="false">
+              <app-date-picker *ngIf="(this.tableStructure['editable'][field] == 'dateRange')"  [dateRange]="row[field]" [myStyle] ="this.myPicketStyle" [parent]="this.instance" [id]="i_tddate" (newDate)="newDateInput($event, field, row['cal_id'], i);"></app-date-picker>
+            </td>
+            <td *ngIf=(Object.keys(this.tableStructure.buttons).length) class="myRowMenu myTd" [ngStyle]="myStyle.actionsMenu">
+                <button *ngFor="let button of Object.keys(this.tableStructure.buttons);let s=index;" (mouseover)="this.hoverOnIcon(true,i,button)" (mouseleave)="this.hoverOnIcon(false,i,button)" [disabled]="(this.tableStructure['disabled'][button] && row[this.tableStructure['disabled'][button][0]]==this.tableStructure['disabled'][button][1])" [ngStyle]="(this.hover[button][i] && myStyle[button+'Hover']) ? myStyle[button+'Hover'] : myStyle[button]"  [attr.row]="i"  [attr.but]="button  | myTranslator : this.glob.language" 
+                [ngClass]="{'myButton': !this.tableStructure.buttonIcon[button],'myButtonIcon':this.tableStructure.buttonIcon[button],'myDisable':(this.tableStructure['disabled'][button] && row[this.tableStructure['disabled'][button][0]]==this.tableStructure['disabled'][button][1])}"   
+                (click)="buttonAction(button,$event,row)">
+                  <i *ngIf="this.tableStructure.buttonIcon[button];" class="{{this.tableStructure.buttonIconClass[button]}}"></i> 
+                  {{this.tableStructure.buttonIcon[button] ? NULL : button | myTranslator : this.glob.language }}</button>
+            </td> 
+          </tr>
+        </ng-container>
+          <!-- Bottom menu :Add Button -->
+          <tr  [hidden]="true">
+            <td class="myTh" *ngFor="let header of this.tableStructure.headers;">     
+                {{ this.tableStructure.aliaces[header] | myTranslator : this.glob.language}}          
+            </td>
+          </tr>
+          <!-- <tr [ngStyle]=myStyle.addEntry class="myAddEntryForm myTr myBottom" *ngIf=this.inputForm> -->
+          <tr [hidden]="!this.inputForm" [ngStyle]=myStyle.addEntry class="myAddEntryForm myTr myBottom" >
+            <td *ngFor="let header of this.tableStructure.headers;let z = index;">
+                <span *ngIf="this.tableStructure.addable[header]" [ngStyle]=myStyle.header>{{ this.tableStructure.addable[header] | myTranslator : this.glob.language}}</span>
+                <input [ngStyle]=myStyle.myAddCell *ngIf="!this.tableStructure.addable[header]&&!this.tableStructure.selectAdd[header] &&!this.tableStructure.dateAdd[header]" class="myAddCell" type=text  [value]="this.myNewEntry[header]"  (input)="newEntryUpdate($event.target.value,header);">   
+                <select  *ngIf="!this.tableStructure.addable[header]&&this.tableStructure.selectAdd[header]" (change)="newEntryUpdate($event.target.value,header);" class="myAddCell" type=text>   
+                    <option *ngFor="let entry of this.tableStructure.selectAdd[header]"   >
+                        {{entry | myTranslator : this.glob.language}}
+                    </option>
+                </select>     
+                <input *ngIf="!this.tableStructure.addable[header]&&this.tableStructure.dateAdd[header]" [value]="this.tableStructure.dateAdd[header]" type="date"  (input)="newEntryUpdate($event.target.value,header);" class="myAddCell">
+            </td>
+            <td class="myNewLabel">{{'New' | myTranslator : this.glob.language}}</td>
+          </tr>
+          <tr [hidden]="(this.inputForm||!this.tableStructure.addEntry)" [ngStyle]=myStyle.addEntry class="myAddEntryForm myTr myBottom myHiddenAddEntry" >
+            <td *ngFor="let header of this.tableStructure.headers;let z = index;">
+                <span *ngIf="this.tableStructure.addable[header]" [ngStyle]=myStyle.header>{{ this.tableStructure.addable[header] | myTranslator : this.glob.language}}</span>
+                <input disabled [ngStyle]=myStyle.myAddCell *ngIf="!this.tableStructure.addable[header]&&!this.tableStructure.selectAdd[header]" class="myAddCell" type=text  [value]="this.myNewEntry[header]"  (input)="newEntryUpdate($event.target.value,header);">   
+                <select disabled *ngIf="!this.tableStructure.addable[header]&&this.tableStructure.selectAdd[header]" (change)="newEntryUpdate($event.target.value,header);" class="myAddCell" type=text>   
+                    <option *ngFor="let entry of this.tableStructure.selectAdd[header]">
+                        {{entry | myTranslator : this.glob.language}}
+                    </option>
+                </select>
+            </td>
+            <td></td>
+          </tr>
+          <tr class="myBottom">
+            <td  [attr.colspan]="(tableStructure.headers.length+2)">
+              <ul [ngStyle]=myStyle.bottomMenu class="myBottomMenu">
+                  <li *ngIf=(this.tableStructure.addEntry&&!this.inputForm) class="myButton" (click)="this.inputForm=!this.inputForm"  >{{'Add New' | myTranslator : this.glob.language}}</li>
+                  <li [ngStyle]=myStyle.myAddButton *ngIf=this.inputForm class="myButton" (click)="addEntry()">{{ 'Save' | myTranslator : this.glob.language}}</li>
+                  <li [ngStyle]=myStyle.myAddButton *ngIf=this.inputForm class="myButton" (click)="this.inputForm=!this.inputForm">{{'Cancel' | myTranslator : this.glob.language}}</li>
+              </ul>
+            </td>
+          </tr>
+          <!-- Paging -->
+          <tr  class="myPagingBottom">
+            <td class="myPagingConteiner" [attr.colspan]="Object.keys(this.tableStructure.buttons).length ?this.tableStructure.headers.length+1  :this.tableStructure.headers.length">
+              <ul [ngStyle]=myStyle.pageContainer class="myPaging">
+                  <li class="pageSymbol"  *ngIf="((this.page-1)>0)" (click)="goToPage(this.page-1)">{{'Previous' | myTranslator : this.glob.language}}</li>
+                  <li class="pageSymbol" *ngIf="((this.page-2)>1)"  (click)="goToPage(1);" >1</li>
+                  <li class="pageSymbol2" *ngIf="(this.page-3)>1"  (click)="pageNav($event)" >...</li>
+                  <li><span  [ngClass]="{'myActive': ((this.page-2)>0),'myDisable':!((this.page-2)>0)}"  (click)="goToPage(this.page-2)">{{this.page-2}}</span></li>
+                  <li><span  [ngClass]="{'myActive': ((this.page-2)>0),'myDisable':!((this.page-1)>0)}"  (click)="goToPage(this.page-1)">{{this.page-1}}</span></li>
+                  <li class="currentPage" *ngIf="this.page != 0 && this.lastpage != 1"><span>{{this.page}}</span></li>
+                  <li ><span  [ngClass]="{'myActive': ((this.page)<this.lastpage),'myDisable':!((this.page)<this.lastpage)}" (click)="goToPage(this.page+1)">{{this.page+1}}</span></li>
+                  <li ><span  [ngClass]="{'myActive': ((this.page+1)<this.lastpage),'myDisable':!((this.page+1)<this.lastpage)}" (click)="goToPage(this.page+2)">{{this.page+2}}</span></li>
+                  <li class="pageSymbol2" *ngIf="((this.page+3)<this.lastpage)"  (click)="pageNav($event)">...</li>
+                  <li class="pageSymbol"  *ngIf="((this.page+2)<this.lastpage)" (click)="goToPage(this.lastpage)">{{this.lastpage}}</li>
+                  <li class="pageSymbol"  *ngIf="(this.page<this.lastpage)" (click)="goToPage(this.page+1)">{{ 'Next' | myTranslator : this.glob.language}}</li>
+                  <li> {{ ' Total' | myTranslator : this.glob.language}} {{':' + (this.tableStructure['total'] ? this.tableStructure['total'] : result.length)}}</li>
+                  <!-- <li *ngIf="this.tableStructure['print']" (click) = "this.printTable()"><div class="myPrintButton" >{{ ' Print Table' | myTranslator : this.glob.language}}</div> </li> -->
+              </ul>
+            </td>
+          </tr>
+         
+      </ng-container>
+    </table> 
+    <!-- <nav class="naviBar">
+      <table class="myAddEntryForm">
+        <tr [ngStyle]=myStyle.addEntry  *ngIf=this.inputForm>
+          <td *ngFor="let header of this.tableStructure.headers;let z = index;">
+            <input type=text  [value]="this.myNewEntry[header]"  (input)="newEntryUpdate($event.target.value,header);">   
+          </td>
+        </tr>
+      </table>
+      <ul [ngStyle]=myStyle.bottomMenu class="myBottomMenu">
+        <li *ngIf=(this.tableStructure.addEntry&&!this.inputForm) class="myButton" (click)="this.inputForm=!this.inputForm"  >Add Entry</li>
+        <li *ngIf=this.inputForm class="myButton" (click)="addEntry()">Save</li>
+        <li *ngIf=this.inputForm class="myButton" (click)="this.inputForm=!this.inputForm">Cancel</li>
+      </ul>
+    </nav> -->
+  </div>
+  <!-- <div  [style.top.px]="top" [style.left.px]="left" class="pageBox">
+    <span>To page:</span>
+    <input type="number" min="1" max="this.lastpage"  [value]="this.goToThisPage" (input)="this.goToThisPage=$event.target.value" step="1">
+    <button class="myGoButton" (click)="this.goToPage(-1);">{{'Go' | myTranslator : this.glob.language}}</button>
+  </div> -->

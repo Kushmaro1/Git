@@ -1,0 +1,177 @@
+@import url('form.less');
+@import url('flex.less');
+@import url('width.less');
+.myDataBox{
+    height: 28vh;
+    width: 100%;
+}
+.myData{
+    width: 72%;
+    // border:1px solid grey;
+}
+// .myRemarks{
+//     // margin-right: 3%;
+//     width: 100%;
+//     // margin-left: 15%;
+//     // white-space: nowrap;
+//     // border:1px solid grey;
+// }
+
+.myContact{
+    margin-left: 30%;
+}
+.myTablesBox{
+    width: 50%;
+}
+
+
+.myRem{
+    width: 100%;
+    text-overflow: auto;
+    overflow: auto;
+    height: 12vh;
+    border-radius: 12px;
+    border: 1px solid grey;
+    line-height: 140%;
+    padding: 1%;
+}
+.myAddForm{
+    // padding: 2% 5%;
+    // padding: 0 2%;
+    width: 100%;
+    // background: #FFFFFF;
+    // height: 99.6%;
+    /* margin-bottom: 4px; */
+    // border-radius: 4px;
+    /* padding: 4px; */
+    // box-shadow: 1px 1px 1px rgba(100, 100, 100, 0.2);
+    position: relative;
+}
+.myRemarks {
+    padding: 0 2%;
+}
+.myDataEntry{
+    min-width: fit-content;
+    height: calc(19vh);
+    line-height: 140%;
+    // min-width: 50%;
+    width: 50%;
+    background: #4098FE;
+    color: #EEFFFF;
+    line-height: 160%;
+    text-shadow: 1px 1px 1px rgba(100,100,100,0.2);
+}
+
+.tableContainer2{
+    width: 100%;
+    height: 30vh;
+  
+}
+.myContactTable{
+    height: calc(19vh);
+}
+.myContactEntries{
+    height:11vh;
+    width: 100%;
+    overflow: auto;
+    position: relative;
+    // padding-top: 2em;
+    // padding-bottom: 2em;
+}
+
+.myAddContactHeader{
+    width: 100%;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0px;
+    padding: 0;
+    margin: 0;
+    z-index: 20;
+    background: white; 
+}
+.myHeader{
+    font-size: 1.2em;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px rgba(100,100,100,0.2);
+    // text-decoration: underline;
+}
+  .myButton{
+    color: var(--element12, #FFFFFF);
+    font-size: calc(0.3em + 0.3vw);
+    font-family: Roboto;
+    border-radius: 4px;
+    line-height: 1vw;
+    height: 1vw;
+    width: 3vw;
+    min-width: fit-content;
+    background: var(--element10, #4098FE);
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    border: none;
+    cursor: pointer;
+    margin-left: 2%;
+    // margin-top: 1%;
+  }
+  .myButton:hover{
+    background:var(--element3hover,#75E5BE);
+  }
+  .myButton:active{
+    background:var(--element20,#46BC93);
+  }
+
+  .myTableHeader{
+    // height: 2vh;
+
+    border-bottom:1px solid;
+    border-color:var(--element4,#E4E5ED) ;
+    background-color: var(--element2,#F9FAFC);
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: calc(0.45em + 0.4vw );
+     line-height: 1.42857143;
+     color: #333;
+     background-color: #fff;
+      padding: 8px 0;
+      font-weight: bold;
+    
+
+}
+  .myRow{
+    border-bottom:1px solid;
+    border-color:var(--element4,#E4E5ED) ;
+    background-color: var(--element2,#F9FAFC);
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: calc(0.45em + 0.4vw );
+     line-height: 1.42857143;
+     color: #333;
+     background-color: #fff;
+  }
+    .myRowMenu{
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        height: 1.2vw;
+        margin: 5px 0 0px;
+        min-height: 1.04166667vw;
+        justify-content: space-around;
+        // border-left:1px solid var(--element4,#E4E5ED);
+    }
+    .disabled input[type="text"]{
+        border: none;
+        outline:none;
+        background-color: transparent;
+    }
+    .small input[type="text"]{
+        height:1.2vw;
+    }
+    .myOdd{
+        // background-color: var(--background2,#FBFBFD);
+        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+       font-size: calc(0.45em + 0.4vw );
+        line-height: 1.42857143;
+        color: #333;
+    //     background-color: var(--background2, #FBFBFD);
+    // color: var(--font3, #9FAABD);
+        background-color: #f9f9f9;
+     }

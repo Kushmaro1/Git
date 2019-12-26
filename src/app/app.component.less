@@ -1,0 +1,69 @@
+
+.myTheme{
+    // -webkit-touch-callout: none; /* iOS Safari */
+    // -webkit-user-select: none; /* Safari */
+    //  -khtml-user-select: none; /* Konqueror HTML */
+    //    -moz-user-select: none; /* Firefox */
+    //     -ms-user-select: none; /* Internet Explorer/Edge */
+    //         user-select: none; /* Non-prefixed version, currentlysupported by Chrome and Opera */
+    box-sizing: border-box;
+    text-align: var(--myAlignment,left);
+    direction: var(--myDirection,ltr);
+    background-color: var(--mainBackground,#F1F7FC);
+    background-image: var(--mainBackgroundImage,linear-gradient( #9f67a0, #253544));
+    width: 100vw;
+    height: 100vh;
+}
+
+.onOffLineIndicator{
+    position: fixed;
+    top: 3vh;
+    left: 2.5vh;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    border: 1px solid lightblue;
+    z-index: 999999999;
+
+}
+.onLine{
+    background-color: lightgreen;
+}
+.onLine:hover::after{
+    content: "Status:Online";
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    top: 0%;
+    left: 110%;
+    position: relative;
+    color: lightgreen;
+
+}
+.offLine{
+    background-color: red;
+}
+.offLine:hover::after{
+    content:"Status:OffLine";
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    top: 0%;
+    left: 110%;
+    position: relative;
+    color: red;
+    
+}
+.ver{
+    z-index: 999999;
+    position: fixed;
+    bottom: 2px;
+    right: 0;
+    color: wheat;
+}
+.myForm{
+    z-index: 999999;
+    position: fixed;
+    bottom: 2px;
+    right: 50px;
+}
